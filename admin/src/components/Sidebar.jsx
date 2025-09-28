@@ -16,17 +16,21 @@ const Sidebar = () => {
                     {/* <img src={assets.home_icon} alt="" /> */}
                     <p className='hidden sm:block'>Dashboard</p>
                 </NavLink>
-                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/all-appointments'}>
+                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/all-products'}>
                     {/* <img src={assets.appointment_icon} alt="" /> */}
-                    <p className='hidden sm:block'>All Appointments</p>
+                    <p className='hidden sm:block'>All Products</p>
                 </NavLink>
-                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/add-doctor'}>
+                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/all-orders'}>
+                    {/* <img src={assets.appointment_icon} alt="" /> */}
+                    <p className='hidden sm:block'>All Orders</p>
+                </NavLink>
+                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/add-client'}>
                     {/* <img src={assets.add_icon} alt="" /> */}
-                    <p className='hidden sm:block'>Add Doctor</p>
+                    <p className='hidden sm:block'>Add New Client</p>
                 </NavLink>
-                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/doctor-list'}>
+                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/all-clients'}>
                     {/* <img src={assets.people_icon} alt="" /> */}
-                    <p className='hidden sm:block'>Doctors List</p>
+                    <p className='hidden sm:block'>All Clients</p>
                 </NavLink>
             </ul>
         }
@@ -36,11 +40,19 @@ const Sidebar = () => {
                     {/* <img src={assets.home_icon} alt="" /> */}
                     <p className='hidden sm:block'>Dashboard</p>
                 </NavLink>
-                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/doctor-appointments'}>
+                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/add-products'}>
                     {/* <img src={assets.appointment_icon} alt="" /> */}
-                    <p className='hidden sm:block'>All Appointments</p>
+                    <p className='hidden sm:block'>Add Products</p>
                 </NavLink>
-                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/doctor-profile'}>
+                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/my-products'}>
+                    {/* <img src={assets.appointment_icon} alt="" /> */}
+                    <p className='hidden sm:block'>My Products</p>
+                </NavLink>
+                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/all-orders'}>
+                    {/* <img src={assets.appointment_icon} alt="" /> */}
+                    <p className='hidden sm:block'>All Orders</p>
+                </NavLink>
+                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/client-profile'}>
                     {/* <img src={assets.people_icon} alt="" /> */}
                     <p className='hidden sm:block'>Profile</p>
                 </NavLink>

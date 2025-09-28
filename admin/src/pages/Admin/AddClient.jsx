@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
-import { AppContext } from "../context/AppContext";
 import { toast } from "react-toastify";
-import ButtonLoader from "../components/ButtonLoader";
 import { useNavigate } from "react-router-dom";
 import { ImageUp } from 'lucide-react';
+import { ClientContext } from "../../context/ClientContext";
+import ButtonLoader from "../../components/ButtonLoader";
 
-const PartnerRegister = () => {
-    const { backendUrl, axios } = useContext(AppContext);
+const AddClient = () => {
+    const { backendUrl, axios } = useContext(ClientContext);
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -68,7 +68,7 @@ const PartnerRegister = () => {
             }
             fd.append("image", image);
 
-            const { data } = await axios.post(`${backendUrl}/api/auth/client/register`, fd, {
+            const { data } = await axios.post(`${backendUrl}/api/admin/add-client`, fd, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 
@@ -88,13 +88,12 @@ const PartnerRegister = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="min-h-[90vh] flex flex-col items-center p-4"
+            className="min-h-screen flex flex-col items-center p-6 md:p-12"
         >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 m-auto w-full sm:w-11/12 lg:w-3/4 border rounded-xl shadow-lg p-6 md:p-10 text-zinc-600">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 m-auto w-full text-zinc-600">
 
                 <div className="col-span-full flex flex-col space-y-2 mb-4">
-                    <p className="text-2xl font-semibold">Client Registration</p>
-                    <p>Please sign up as a client to continue</p>
+                    <p className="text-2xl font-semibold">Add New Client</p>
                 </div>
 
                 {/* Left Column */}
@@ -277,11 +276,11 @@ const PartnerRegister = () => {
                     disabled={loading}
                     className="col-span-full bg-blue text-white w-full py-2 rounded-md text-base disabled:opacity-50 cursor-pointer hover:opacity-95"
                 >
-                    {loading ? <ButtonLoader /> : "Register as Client"}
+                    {loading ? <ButtonLoader /> : "Add Client"}
                 </button>
             </div>
         </form>
     );
 };
 
-export default PartnerRegister;
+export default AddClient;

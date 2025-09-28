@@ -7,15 +7,17 @@ import clientModel from '../models/client-model.js';
 import orderModel from '../models/order-model.js';
 import productModel from '../models/product-model.js';
 
+import UserModel from '../models/user-model.js';
 
-// Register Client API : /api/admin/register-client
-const registerClient = async (req, res) => {
+
+// Add Client API : /api/admin/add-client
+export const addNewClient = async (req, res) => {
     try {
-        const { name, email, phone, password, aadharNumber, panNumber, dob, address } = req.body;
+        const { name, email, phone, password, gender, dob, address, aadharNumber, accountNumber, ifscCode, panNumber } = req.body;
         const imageFile = req.file;
 
         // Validate required fields
-        if (!name || !email || !phone || !password || !aadharNumber || !panNumber || !dob || !address) {
+        if (!name || !email || !phone || !password || !gender || !dob || !address || !aadharNumber || !accountNumber || !ifscCode || !panNumber) {
             return res.json({ success: false, message: "Missing required fields" });
         }
 
@@ -30,8 +32,11 @@ const registerClient = async (req, res) => {
         }
 
         // Validate phone
-        if (!phone || !/^\d{10}$/.test(phone)) {
-            return res.status(400).json({ success: false, message: "Enter a valid 10-digit phone number" });
+        if (!phone || !/^\+\d{1,3}\d{7,14}$/.test(phone)) {
+            return res.status(400).json({
+                success: false,
+                message: "Enter a valid phone number with country code"
+            });
         }
 
         // Check image file
@@ -40,14 +45,14 @@ const registerClient = async (req, res) => {
         }
 
         // Prevent duplicate email
-        const existingClient = await clientModel.findOne({ email });
+        const existingClient = await UserModel.findOne({ email });
         if (existingClient) {
             return res.json({ success: false, message: "Client already exists" });
         }
 
         // validating strong password
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(dob, salt);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
         // upload image to cloudinary
         const imageUpload = await cloudinary.uploader.upload(imageFile.path, { resource_type: "image" });
@@ -57,19 +62,23 @@ const registerClient = async (req, res) => {
             name,
             email,
             phone,
-            image: imageUrl,
             password: hashedPassword,
-            aadharNumber,
-            panNumber,
+            image: imageUrl,
+            gender,
             dob,
             address: JSON.parse(address),
-            date: Date.now()
+            aadharNumber,
+            accountNumber,
+            ifscCode,
+            panNumber,
+            isClient: true,
+            clientVerificationStatus: "confirmed"
         };
 
-        const newClient = new clientModel(clientData);
+        const newClient = new UserModel(clientData);
         await newClient.save();
 
-        return res.json({ success: true, message: "Client Registered" });
+        return res.json({ success: true, message: "Client Added" });
     } catch (error) {
         return res.json({ success: false, message: error.message });
     }

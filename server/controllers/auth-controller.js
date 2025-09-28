@@ -153,6 +153,10 @@ export const userLogin = async (req, res) => {
 
         const user = await UserModel.findOne({ phone });
 
+        if (user.isAdmin || user.isClient) {
+            return res.json({ success: false, message: "Invalid credentials" });
+        }
+
         if (!user) {
             return res.json({ success: false, message: "user not exist" });
         }
@@ -183,8 +187,8 @@ export const clientLogin = async (req, res) => {
 
         const user = await UserModel.findOne({ email });
 
-        if (!user) {
-            return res.json({ success: false, message: "user not exist" });
+        if (!user || !user.isClient) {
+            return res.json({ success: false, message: "Invalid credentials" });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
@@ -233,57 +237,57 @@ export const adminLogin = async (req, res) => {
 // Forgot Password POST API : /api/auth/forgot-password
 export const forgotPassword = async (req, res) => {
     try {
-    const { email } = req.body;
-    const user = await UserModel.findOne({ email });
-    if (!user) return res.json({ success: false, message: "User not found" });
+        const { email } = req.body;
+        const user = await UserModel.findOne({ email });
+        if (!user) return res.json({ success: false, message: "User not found" });
 
-    // generate token
-    const token = crypto.randomBytes(32).toString("hex");
-    user.resetPasswordToken = token;
-    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-    await user.save();
+        // generate token
+        const token = crypto.randomBytes(32).toString("hex");
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+        await user.save();
 
-    // send email
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
-    });
+        // send email
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
+        });
 
-    const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
+        const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
 
-    await transporter.sendMail({
-      to: user.email,
-      subject: "Password Reset Request",
-      html: `<p>Click <a href="${resetLink}">here</a> to reset your password</p>`
-    });
+        await transporter.sendMail({
+            to: user.email,
+            subject: "Password Reset Request",
+            html: `<p>Click <a href="${resetLink}">here</a> to reset your password</p>`
+        });
 
-    return res.json({ success: true, message: "Password reset link sent to email" });
-  } catch (err) {
-    return res.json({ success: false, message: err.message });
-  }
+        return res.json({ success: true, message: "Password reset link sent to email" });
+    } catch (err) {
+        return res.json({ success: false, message: err.message });
+    }
 }
 
 // Reset Password POST API : /api/auth/reset-password
 export const resetPassword = async (req, res) => {
     try {
-    const { token } = req.params;
-    const { password } = req.body;
+        const { token } = req.params;
+        const { password } = req.body;
 
-    const user = await UserModel.findOne({
-      resetPasswordToken: token,
-      resetPasswordExpires: { $gt: Date.now() }
-    });
+        const user = await UserModel.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() }
+        });
 
-    if (!user) return res.json({ success: false, message: "Invalid or expired token" });
+        if (!user) return res.json({ success: false, message: "Invalid or expired token" });
 
-    user.password = password; // hash with bcrypt in real apps
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
+        user.password = password; // hash with bcrypt in real apps
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
 
-    await user.save();
-    return res.json({ success: true, message: "Password updated successfully" });
-  } catch (err) {
-    return res.json({ success: false, message: err.message });
-  }
+        await user.save();
+        return res.json({ success: true, message: "Password updated successfully" });
+    } catch (err) {
+        return res.json({ success: false, message: err.message });
+    }
 }
 

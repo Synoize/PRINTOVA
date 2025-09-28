@@ -3,7 +3,7 @@
 // import axios from 'axios';
 // import { toast } from 'react-toastify';
 
-// const DoctorProfile = () => {
+// const ClientProfile = () => {
 //   const { backendUrl, docToken, profileData, setProfileData, getProfileData } = useContext(DoctorContext);
 
 //   const { currency } = useContext(AppContext);
@@ -96,4 +96,4 @@
 //   )
 // }
 
-// export default DoctorProfile
+// export default ClientProfile

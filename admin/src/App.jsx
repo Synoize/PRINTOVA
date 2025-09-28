@@ -7,6 +7,8 @@ import { ClientContext } from './context/ClientContext'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import { Route, Routes } from 'react-router-dom'
+import AddClient from './pages/Admin/AddClient';
+import ErrorPage from './pages/ErrorPage';
 
 const App = () => {
   const { aToken } = useContext(AdminContext)
@@ -18,16 +20,25 @@ const App = () => {
       <Navbar />
       <div className='flex items-start'>
         <Sidebar />
-        <Routes>
-          {/* Admin Route */}
-          <Route path={''} element={<></>} />
-          {/* <Route path={'/admin-dashboard'} element={<Dashboard />} />
-          <Route path={'/add-doctor'} element={<AddDoctor />} /> */}
+        <div className='max-h-screen w-full overflow-y-auto'>
+          <Routes>
+            {/* Admin Route */}
+            <Route path={'*'} element={<ErrorPage/>} />
+            <Route path={''} element={<></>} />
+            <Route path={'/dashboard'} element={<AddClient />} />
+            <Route path={'/all-products'} element={<AddClient />} />
+            <Route path={'/all-orders'} element={<AddClient />} />
+            <Route path={'/add-client'} element={<AddClient />} />
+            <Route path={'/all-clients'} element={<AddClient />} />
 
-          {/* Doctor Route */}
-          {/* <Route path={'/doctor-dashboard'} element={<DoctorDashboard/>} /> */}
-          {/* <Route path={'/doctor-profile'} element={<DoctorProfile/>} /> */}
-        </Routes>
+            {/* Client Route */}
+            <Route path={'/client-dashboard'} element={<AddClient />} />
+            <Route path={'/orders'} element={<AddClient />} />
+            <Route path={'/add-product'} element={<AddClient />} />
+            <Route path={'/my-products'} element={<AddClient />} />
+            <Route path={'/client-profile'} element={<AddClient />} />
+          </Routes>
+        </div>
       </div>
     </div>
   ) : (
