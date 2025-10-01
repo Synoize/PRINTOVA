@@ -1,14 +1,14 @@
 // ResetPassword.jsx
 import React, { useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { AppContext } from "../context/AppContext";
 import { toast } from "react-toastify";
 import { X } from "lucide-react";
+import { AdminContext } from "../context/AdminContext";
 
 const ResetPassword = ({ action }) => {
   const { token } = useParams();
   const navigate = useNavigate();
-  const { axios, backendUrl } = useContext(AppContext);
+  const { axios, backendUrl } = useContext(AdminContext);
   const { setOpenReset } = action;
 
   const [password, setPassword] = useState("");

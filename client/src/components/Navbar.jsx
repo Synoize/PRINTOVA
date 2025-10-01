@@ -96,6 +96,7 @@ const Navbar = () => {
                             <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/shop'}><p className='px-8 py-2 rounded-full inline-block'>SHOP</p></NavLink>
                             <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/about'}><p className='px-8 py-2 rounded-full inline-block'>ABOUT</p></NavLink>
                             <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/contact'}><p className='px-8 py-2 rounded-full inline-block'>CONTACT</p></NavLink>
+                            {!token && <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/login'}><p className='px-8 py-2 rounded-full inline-block'>LOGIN</p></NavLink> }
                         </ul>
                     </div>
                 </div>

@@ -6,9 +6,35 @@ import userModel from '../models/user-model.js';
 import clientModel from '../models/client-model.js';
 import orderModel from '../models/order-model.js';
 import productModel from '../models/product-model.js';
-
 import UserModel from '../models/user-model.js';
 
+// Admin login API : /api/admin/login
+const adminLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body
+
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+            const token = jwt.sign(email + password, process.env.JWT_ADMIN_SECRET_KEY)
+
+            return res.json({ success: true, token })
+
+        } else {
+            return res.json({ success: false, message: "Invalid credentials" })
+        }
+
+    } catch (error) {
+        return res.json({ success: false, message: error.message });
+    }
+}
+
+// Admin client verification status API : /api/admin/verify-client/:userId
+const clientVerificationStatus = async (req, res) => {
+    try {
+        
+    } catch (error) {
+        return res.json({ success: false, message: error.message });
+    }
+}
 
 // Add Client API : /api/admin/add-client
 export const addNewClient = async (req, res) => {
@@ -83,25 +109,6 @@ export const addNewClient = async (req, res) => {
         return res.json({ success: false, message: error.message });
     }
 };
-
-// Admin login API : /api/admin/login
-const adminLogin = async (req, res) => {
-    try {
-        const { email, password } = req.body
-
-        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-            const token = jwt.sign(email + password, process.env.JWT_ADMIN_SECRET_KEY)
-
-            return res.json({ success: true, token })
-
-        } else {
-            return res.json({ success: false, message: "Invalid credentials" })
-        }
-
-    } catch (error) {
-        return res.json({ success: false, message: error.message });
-    }
-}
 
 // Get All Clients List API : /api/admin/all-clients
 const allClients = async (req, res) => {

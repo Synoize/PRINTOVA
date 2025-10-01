@@ -4,9 +4,6 @@ import { v2 as cloudinary } from 'cloudinary';
 import jwt from 'jsonwebtoken'
 import clientModel from '../models/client-model.js';
 
-
-
-
 // Get Client Profile API : /api/client/get-profile 
 const getClientProfile = async (req, res) => {
     try {

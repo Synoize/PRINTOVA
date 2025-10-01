@@ -5,12 +5,13 @@ import { toast } from 'react-toastify';
 import ButtonLoader from '../components/ButtonLoader';
 import ForgotPassword from '../components/ForgotPassword';
 import ResetPassword from '../components/ResetPassword';
+import { Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
   const { backendUrl, token, setToken, axios } = useContext(AppContext);
   const navigate = useNavigate();
 
-  const [state, setState] = useState('Sign Up');
+  const [state, setState] = useState('Login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -146,16 +147,17 @@ const Login = () => {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-sm text-blue"
             >
-              {showPassword ? 'Hide' : 'Show'}
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </span>
           </div>
         </div>
 
-        {state === 'Login' &&
+        {state === 'Login' && (
           <div className='w-full flex justify-between mt-1'>
-            <button onClick={() => setOpenForgot(true)} className='hover:underline text-blue cursor-pointer'>forgot password</button>
-            <button onClick={() => setOpenReset(true)} className='hover:underline text-blue cursor-pointer'>reset password</button>
-          </div>}
+            <p onClick={() => setOpenForgot(true)} className='hover:underline text-blue cursor-pointer'>forgot password</p>
+            <p onClick={() => setOpenReset(true)} className='hover:underline text-blue cursor-pointer'>reset password</p>
+          </div>
+        )}
 
         {
           openForgot && (

@@ -1,12 +1,12 @@
 // ForgotPassword.jsx
 import React, { useState, useContext } from "react";
-import { AppContext } from "../context/AppContext";
 import { toast } from "react-toastify";
 import { X } from 'lucide-react';
+import { AdminContext } from "../context/AdminContext";
 
 const ForgotPassword = ({ action }) => {
   const {setOpenForgot} = action;
-  const { axios, backendUrl } = useContext(AppContext);
+  const { axios, backendUrl } = useContext(AdminContext);
   const [email, setEmail] = useState("");
   
   const handleSubmit = async (e) => {

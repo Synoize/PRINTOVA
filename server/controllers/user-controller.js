@@ -24,7 +24,6 @@ export const getUserProfile = async (req, res) => {
     }
 };
 
-
 // Update User Profile API : /api/user/update-profile 
 export const updateUserProfile = async (req, res) => {
     try {

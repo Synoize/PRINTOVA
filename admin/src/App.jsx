@@ -9,6 +9,7 @@ import Sidebar from './components/Sidebar'
 import { Route, Routes } from 'react-router-dom'
 import AddClient from './pages/Admin/AddClient';
 import ErrorPage from './pages/ErrorPage';
+import AddProduct from './pages/Admin/AddProduct';
 
 const App = () => {
   const { aToken } = useContext(AdminContext)
@@ -30,11 +31,12 @@ const App = () => {
             <Route path={'/all-orders'} element={<AddClient />} />
             <Route path={'/add-client'} element={<AddClient />} />
             <Route path={'/all-clients'} element={<AddClient />} />
+            <Route path={'/all-users'} element={<AddClient />} />
 
             {/* Client Route */}
             <Route path={'/client-dashboard'} element={<AddClient />} />
             <Route path={'/orders'} element={<AddClient />} />
-            <Route path={'/add-product'} element={<AddClient />} />
+            <Route path={'/add-products'} element={<AddProduct />} />
             <Route path={'/my-products'} element={<AddClient />} />
             <Route path={'/client-profile'} element={<AddClient />} />
           </Routes>

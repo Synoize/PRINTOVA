@@ -46,7 +46,7 @@ const AdminContextProvider = (props) => {
     }
 
     const value = {
-        aToken, setAToken, backendUrl,
+        aToken, setAToken, backendUrl, axios,
         clients, getAllClients,
         dashData, setDashData, getDashData,
         orders, setOrders,
