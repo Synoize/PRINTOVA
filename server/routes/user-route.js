@@ -7,6 +7,6 @@ import { getUserProfile, updateUserProfile } from '../controllers/user-controlle
 const userRouter = express.Router()
 
 userRouter.get('/get-profile', authUser, getUserProfile)
-userRouter.post('/update-profile', upload.single('image'), authUser, updateUserProfile)
+userRouter.patch('/update-profile', upload.single('image'), authUser, updateUserProfile)
 
 export default userRouter

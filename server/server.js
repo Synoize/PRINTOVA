@@ -8,6 +8,9 @@ import connectCloudinary from './config/cloudinary.js';
 import authRouter from './routes/auth-route.js'
 import userRouter from './routes/user-route.js';
 import clientRouter from './routes/client-router.js';
+import adminRouter from './routes/admin-route.js';
+import orderRouter from './routes/order-route.js';
+import productRouter from './routes/product-route.js';
 
 // app config
 const app = express();
@@ -33,6 +36,9 @@ app.use(cors(corsOptions))
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
 app.use('/api/client', clientRouter)
+app.use('/api/admin', adminRouter)
+app.use('/api/product', productRouter)
+app.use('/api/order', orderRouter)
 
 
 app.get('/', (req, res) => {

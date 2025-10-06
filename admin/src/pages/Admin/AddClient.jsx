@@ -1,13 +1,11 @@
 import React, { useState, useContext } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { ImageUp } from 'lucide-react';
-import { ClientContext } from "../../context/ClientContext";
 import ButtonLoader from "../../components/ButtonLoader";
+import { AdminContext } from "../../context/AdminContext";
 
 const AddClient = () => {
-    const { backendUrl, axios } = useContext(ClientContext);
-    const navigate = useNavigate();
+    const { backendUrl, axios, aToken } = useContext(AdminContext);
 
     const [formData, setFormData] = useState({
         name: "",
@@ -69,12 +67,27 @@ const AddClient = () => {
             fd.append("image", image);
 
             const { data } = await axios.post(`${backendUrl}/api/admin/add-client`, fd, {
-                headers: { "Content-Type": "multipart/form-data" },
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${aToken}`,
+                },
             });
 
             if (data.success) {
                 toast.success(data.message);
-                navigate("/");
+                setFormData({
+                    name: "",
+                    email: "",
+                    phone: "+91",
+                    password: "",
+                    gender: "",
+                    dob: "",
+                    address: { street: "", city: "", state: "", zip: "" },
+                    aadharNumber: "",
+                    accountNumber: "",
+                    ifscCode: "",
+                    panNumber: "",
+                })
             } else {
                 toast.error(data.message);
             }
@@ -92,8 +105,8 @@ const AddClient = () => {
         >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 m-auto w-full text-zinc-600">
 
-                <div className="col-span-full flex flex-col space-y-2 mb-4">
-                    <p className="text-2xl font-semibold">Add New Client</p>
+                <div className="col-span-full flex flex-col mb-4">
+                    <p className="text-2xl font-semibold text-gray-800">Add New Client</p>
                 </div>
 
                 {/* Left Column */}
@@ -102,7 +115,7 @@ const AddClient = () => {
                     <div className='flex items-center gap-4 mb-2 text-gray-500'>
                         <label htmlFor="client-img">
                             {image ? <img className='w-24 h-24 object-contain bg-gray-100 rounded-full cursor-pointer' src={image && URL.createObjectURL(image)} alt="" /> : (
-                                <div className='w-24 h-24 flex items-center justify-center bg-gray-100 rounded-full cursor-pointer'>
+                                <div className="w-24 h-24 flex items-center justify-center bg-gray-100 rounded-full cursor-pointer border border-gray-300">
                                     <ImageUp />
                                 </div>
                             )}

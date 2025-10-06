@@ -51,29 +51,29 @@ export const featuredProduct = [
 ];
 
 export const premiumItems = [
-    { name: 'Project Thesis printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Custom Cap printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Custom Button Badges', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Booklets Printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Awards printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Project Thesis printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Custom Cap printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Custom Button Badges', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Booklets Printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Awards printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
+    { name: 'Project Thesis printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Stationary Print", image: paperprinter },
+    { name: 'Custom Cap printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Poster, flex & more", image: paperprinter },
+    { name: 'Custom Button Badges', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Custom t-shirts", image: paperprinter },
+    { name: 'Booklets Printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Goodies", image: paperprinter },
+    { name: 'Awards printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Visiting card", image: paperprinter },
+    { name: 'Project Thesis printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Labels, Stickers & Packaging", image: paperprinter },
+    { name: 'Custom Cap printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Business card", image: paperprinter },
+    { name: 'Custom Button Badges', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Stationary Print", image: paperprinter },
+    { name: 'Booklets Printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Poster, flex & more", image: paperprinter },
+    { name: 'Awards printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Poster, flex & more", image: paperprinter },
 ];
 
 export const bestsellerProduct = [
-    { name: 'Project Thesis printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Custom Cap printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Custom Button Badges', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Booklets Printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Awards printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Project Thesis printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Custom Cap printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Custom Button Badges', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Booklets Printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
-    { name: 'Awards printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", image: paperprinter },
+    { name: 'Project Thesis printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Stationary Print", image: paperprinter },
+    { name: 'Custom Cap printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Poster, flex & more", image: paperprinter },
+    { name: 'Custom Button Badges', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Custom t-shirts", image: paperprinter },
+    { name: 'Booklets Printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Goodies", image: paperprinter },
+    { name: 'Awards printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Visiting card", image: paperprinter },
+    { name: 'Project Thesis printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Labels, Stickers & Packaging", image: paperprinter },
+    { name: 'Custom Cap printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Business card", image: paperprinter },
+    { name: 'Custom Button Badges', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Stationary Print", image: paperprinter },
+    { name: 'Booklets Printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Poster, flex & more", image: paperprinter },
+    { name: 'Awards printing', rating: 4.5, price: 30.99, description: "Bosch hammer drill like the GBH 2-28 DV", category: "Poster, flex & more", image: paperprinter },
 ];
 
 export const categories = [

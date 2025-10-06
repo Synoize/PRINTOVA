@@ -1,8 +1,10 @@
 import React from 'react';
 import { bestsellerProduct } from '../assets/assets';
 import { MoveRightIcon, Star } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Bestseller = () => {
+  const navigate = useNavigate();
   
   return (
     <div>
@@ -10,7 +12,7 @@ const Bestseller = () => {
 
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {bestsellerProduct.map((product, index) => (
-          <div key={index} className="rounded-lg border border-gray-400 hover:-translate-y-1 transition duration-300 cursor-pointer">
+          <div key={index} onClick={() => navigate(`/shop/${product.category}/${product.name}`)} className="rounded-lg border border-gray-400 hover:-translate-y-1 transition duration-300 cursor-pointer">
             <div className="bg-gray-100 h-32 md:h-38 w-full rounded-t-lg">
               <img
                 src={product.image}

@@ -49,7 +49,7 @@ const ClientContextProvider = (props) => {
     }
 
     const value = {
-        backendUrl,
+        axios, backendUrl,
         cToken, setCToken,
         dashData, setDashData, getDashData,
         profileData, setProfileData, getProfileData,

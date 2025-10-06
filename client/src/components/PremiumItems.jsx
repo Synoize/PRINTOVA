@@ -1,8 +1,10 @@
 import React from 'react';
 import { Star } from 'lucide-react';
 import { premiumItems } from '../assets/assets';
+import { useNavigate } from 'react-router-dom';
 
 const PremiumItems = () => {
+    const navigate = useNavigate();
    
     return (
         <div>
@@ -11,7 +13,7 @@ const PremiumItems = () => {
             <div className='w-full overflow-x-scroll pt-6'>
                 <div className="flex gap-6">
                     {premiumItems.map((product, index) => (
-                        <div key={index} className="rounded-lg border border-gray-400 min-w-60 hover:-translate-y-1 transition duration-300 cursor-pointer">
+                        <div key={index} onClick={() => navigate(`/shop/${product.category}/${product.name}`)} className="rounded-lg border border-gray-400 min-w-60 hover:-translate-y-1 transition duration-300 cursor-pointer">
                             <div className="bg-gray-100 h-38 w-full rounded-t-lg">
                                 <img
                                     src={product.image}

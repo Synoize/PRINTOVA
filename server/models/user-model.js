@@ -34,7 +34,8 @@ const userSchema = new mongoose.Schema({
     },
     aadharNumber: {
         type: String,
-        default: null
+        required: true,
+        unique: true 
     },
     isAdmin: {
         type: Boolean,
@@ -42,15 +43,17 @@ const userSchema = new mongoose.Schema({
     },
     accountNumber: {
         type: String,
-        default: ""
+        required: true,
+        unique: true 
     },
     ifscCode: {
         type: String,
-        default: ""
+        required: true,
     },
-    panCard: {
+    panNumber: {
         type: String,
-        default: ""
+        required: true,
+        unique: true 
     },
     clientVerificationStatus: {
         type: String,

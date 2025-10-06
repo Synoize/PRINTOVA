@@ -10,17 +10,64 @@ const AdminContextProvider = (props) => {
 
     const [aToken, setAToken] = useState(localStorageToken ? localStorageToken : '')
     const [clients, setClients] = useState([])
-    const [orders, setOrders] = useState([])
+    const [users, setUsers] = useState([])
+    const [products, setProducts] = useState([])
+    const [orderList, setOrderList] = useState([]);
     const [dashData, setDashData] = useState(false)
 
     // Get All Clients
     const getAllClients = async () => {
         try {
-            const { data } = await axios.post(`${backendUrl}/api/admin/all-clients`, {}, { headers: { token } })
+            const { data } = await axios.get(`${backendUrl}/api/admin/all-clients`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${aToken}`,
+                }
+            });
 
             if (data.success) {
                 setClients(data.clients)
-                console.log(data.clients);
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
+     // Get All Users
+    const getAllUsers = async () => {
+        try {
+            const { data } = await axios.get(`${backendUrl}/api/admin/all-users`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${aToken}`,
+                }
+            });
+
+            if (data.success) {
+                setUsers(data.users)
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
+    // Get All Products
+     const getAllProducts = async () => {
+        try {
+            const { data } = await axios.get(`${backendUrl}/api/admin/all-products`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${aToken}`,
+                }
+            });
+
+            if (data.success) {
+                setProducts(data.products)
+                console.log(data.products);
 
             } else {
                 toast.error(data.message)
@@ -47,9 +94,11 @@ const AdminContextProvider = (props) => {
 
     const value = {
         aToken, setAToken, backendUrl, axios,
-        clients, getAllClients,
         dashData, setDashData, getDashData,
-        orders, setOrders,
+        clients, getAllClients,
+        users, getAllUsers,
+        products, getAllProducts,
+        orderList, setOrderList,
     }
 
     return (

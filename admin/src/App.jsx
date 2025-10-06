@@ -10,13 +10,17 @@ import { Route, Routes } from 'react-router-dom'
 import AddClient from './pages/Admin/AddClient';
 import ErrorPage from './pages/ErrorPage';
 import AddProduct from './pages/Admin/AddProduct';
+import OrderList from './pages/Admin/Orderlist';
+import ClientList from './pages/Admin/ClientList';
+import UserList from './pages/Admin/UserList';
+import ProductList from './pages/Admin/ProductList';
 
 const App = () => {
   const { aToken } = useContext(AdminContext)
   const { cToken } = useContext(ClientContext)
 
   return aToken || cToken ? (
-    <div className='bg-slate-50'>
+    <div className='bg-gray-50'>
       <ToastContainer />
       <Navbar />
       <div className='flex items-start'>
@@ -27,11 +31,12 @@ const App = () => {
             <Route path={'*'} element={<ErrorPage/>} />
             <Route path={''} element={<></>} />
             <Route path={'/dashboard'} element={<AddClient />} />
-            <Route path={'/all-products'} element={<AddClient />} />
-            <Route path={'/all-orders'} element={<AddClient />} />
-            <Route path={'/add-client'} element={<AddClient />} />
-            <Route path={'/all-clients'} element={<AddClient />} />
-            <Route path={'/all-users'} element={<AddClient />} />
+            <Route path={'/products'} element={<ProductList />} />
+            <Route path={'/products/add'} element={<AddProduct />} />
+            <Route path={'/all-orders'} element={<OrderList />} />
+            <Route path={'/clients'} element={<ClientList />} />
+            <Route path={'/clients/add'} element={<AddClient />} />
+            <Route path={'/users'} element={<UserList />} />
 
             {/* Client Route */}
             <Route path={'/client-dashboard'} element={<AddClient />} />

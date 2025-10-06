@@ -1,36 +1,52 @@
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import { v2 as cloudinary } from 'cloudinary';
-import jwt from 'jsonwebtoken'
-import userModel from '../models/user-model.js';
-import clientModel from '../models/client-model.js';
-import orderModel from '../models/order-model.js';
-import productModel from '../models/product-model.js';
+import OrderModel from '../models/order-model.js';
+import ProductModel from '../models/product-model.js';
 import UserModel from '../models/user-model.js';
 
-// Admin login API : /api/admin/login
-const adminLogin = async (req, res) => {
+// Admin client verification status API : /api/admin/verify-client
+export const verifyClientStatus = async (req, res) => {
     try {
-        const { email, password } = req.body
+        const clientId = req.clientId;
 
-        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-            const token = jwt.sign(email + password, process.env.JWT_ADMIN_SECRET_KEY)
+        const client = await clientModel.findById(clientId);
 
-            return res.json({ success: true, token })
-
-        } else {
-            return res.json({ success: false, message: "Invalid credentials" })
+        if (!client) {
+            return res.json({ success: false, message: "Client not found" });
         }
+        if (client.clientVerificationStatus !== "requested" && !client.isClient) {
+            return res.json({ success: false, message: "Invalid status" });
+        }
+
+        client.clientVerificationStatus = "confirmed";
+        client.isClient = true;
+        await client.save();
+        return res.json({ success: true, message: "Client successfully verified" });
 
     } catch (error) {
         return res.json({ success: false, message: error.message });
     }
 }
 
-// Admin client verification status API : /api/admin/verify-client/:userId
-const clientVerificationStatus = async (req, res) => {
+// Admin client verification status API : /api/admin/reject-client
+export const rejectClientStatus = async (req, res) => {
     try {
-        
+        const clientId = req.clientId;
+
+        const client = await clientModel.findById(clientId)
+        if (!client) {
+            return res.json({ success: false, message: "Client not found" });
+        }
+        if (!client.isClient) {
+            return res.json({ success: false, message: "Invalid status" });
+        }
+
+        client.clientVerificationStatus = "rejected";
+        client.isClient = false;
+        await client.save();
+        return res.json({ success: true, message: "Client application rejected" });
+
     } catch (error) {
         return res.json({ success: false, message: error.message });
     }
@@ -111,9 +127,12 @@ export const addNewClient = async (req, res) => {
 };
 
 // Get All Clients List API : /api/admin/all-clients
-const allClients = async (req, res) => {
+export const allClients = async (req, res) => {
     try {
-        const clients = await clientModel.find({}).select('-password')
+        const users = await UserModel.find({}).select('-password')
+
+        const clients = users.filter(user => user.isClient === true);
+
         return res.json({ success: true, clients });
     } catch (error) {
         return res.json({ success: false, message: error.message });
@@ -121,9 +140,12 @@ const allClients = async (req, res) => {
 }
 
 // Get All Users List API : /api/admin/all-users
-const allUsers = async (req, res) => {
+export const allUsers = async (req, res) => {
     try {
-        const users = await userModel.find({}).select('-password')
+        const data = await UserModel.find({}).select('-password')
+
+        const users = data.filter(user => user.isClient === false);
+
         return res.json({ success: true, users });
     } catch (error) {
         return res.json({ success: false, message: error.message });
@@ -131,9 +153,9 @@ const allUsers = async (req, res) => {
 }
 
 // Get All Orders List API : /api/admin/all-orders
-const allOrders = async (req, res) => {
+export const allOrders = async (req, res) => {
     try {
-        const orders = await orderModel.find({});
+        const orders = await OrderModel.find({});
         return res.json({ success: true, orders });
     } catch (error) {
         return res.json({ success: false, message: error.message });
@@ -141,9 +163,9 @@ const allOrders = async (req, res) => {
 }
 
 // Get All Products List API : /api/admin/all-products
-const allProducts = async (req, res) => {
+export const allProducts = async (req, res) => {
     try {
-        const products = await productModel.find({});
+        const products = await ProductModel.find({});
         return res.json({ success: true, products });
     } catch (error) {
         return res.json({ success: false, message: error.message });
@@ -151,11 +173,11 @@ const allProducts = async (req, res) => {
 }
 
 // API to get dashboard data for admin panel: /api/admin/dashboard
-const adminDashboard = async (req, res) => {
+export const adminDashboard = async (req, res) => {
     try {
         const clients = await clientModel.find({});
-        const users = await userModel.find({});
-        const orders = await orderModel.find({});
+        const users = await UserModel.find({});
+        const orders = await OrderModel.find({});
 
         const dashboardData = {
             clients: clients.length,
@@ -170,5 +192,3 @@ const adminDashboard = async (req, res) => {
         return res.json({ success: false, message: error.message });
     }
 };
-
-export { registerClient, adminLogin, allClients, allUsers, allOrders, allProducts, adminDashboard };

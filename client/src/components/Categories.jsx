@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 import { categories } from "../assets/assets";
 import { MoveRightIcon } from "lucide-react";
 
@@ -15,20 +16,20 @@ const Categories = () => {
             </div>
 
             <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-9 gap-6">
-                {categories.map((categorie, index) => (
-                    <div key={index} className="flex flex-col items-center hover:-translate-y-1 transition duration-300 cursor-pointer">
+                {categories.map((category, index) => (
+                    <Link onClick={() => scrollTo(0,0)} key={index} to={`/shop/${category.name}`} className="flex flex-col items-center hover:-translate-y-1 transition duration-300 cursor-pointer">
                         <div
-                            key={categorie.id}
+                            key={category.id}
                             className="p-2 md:p-4 mb-3 rounded-lg border border-gray-400 "
                         >
                             <img
-                                src={categorie.img}
-                                alt={categorie.name}
+                                src={category.img}
+                                alt={category.name}
                                 className="w-16 h-16 md:w-20 md:h-20 object-contain"
                             />
                         </div>
-                        <p className="text-center text-sm line-clamp-2">{categorie.name}</p>
-                    </div>
+                        <p className="text-center text-sm line-clamp-2">{category.name}</p>
+                    </Link>
                 ))}
             </div>
         </div>

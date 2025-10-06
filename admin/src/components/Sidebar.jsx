@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { AdminContext } from '../context/AdminContext'
 import { NavLink } from 'react-router-dom'
 import { ClientContext } from '../context/ClientContext'
-import { BadgePlus, LayoutDashboard, ShoppingBasket, ShoppingCart, User, UserPen, UserPlus, Users } from 'lucide-react'
+import { BadgePlus, LayoutDashboard, ShoppingBasket, ShoppingCart, User, UserPen, Users } from 'lucide-react'
 
 const Sidebar = () => {
 
@@ -17,11 +17,7 @@ const Sidebar = () => {
                     <LayoutDashboard size={20} />
                     <p className='hidden sm:block'>Dashboard</p>
                 </NavLink>
-                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/add-products'}>
-                    <BadgePlus size={20} />
-                    <p className='hidden sm:block'>Add Products</p>
-                </NavLink>
-                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/all-products'}>
+                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/products'}>
                     <ShoppingBasket size={20} />
                     <p className='hidden sm:block'>All Products</p>
                 </NavLink>
@@ -29,15 +25,11 @@ const Sidebar = () => {
                     <ShoppingCart size={20} />
                     <p className='hidden sm:block'>All Orders</p>
                 </NavLink>
-                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/add-client'}>
-                    <UserPlus size={20} />
-                    <p className='hidden sm:block'>Add New Client</p>
-                </NavLink>
-                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/all-clients'}>
+                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/clients'}>
                     <Users size={20} />
                     <p className='hidden sm:block'>All Clients</p>
                 </NavLink>
-                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/all-users'}>
+                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/users'}>
                     <User size={20} />
                     <p className='hidden sm:block'>All Users</p>
                 </NavLink>

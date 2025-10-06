@@ -1,12 +1,10 @@
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
-    clientId: { type: String, ref: "Client", required: true },
-    clientData: { type: Object, required: true },
     name: { type: String, required: true },
     description: { type: String, required: true },
     category: { type: String, required: true },
-    rating: { type: String, required: true },
+    rating: { type: String, default: '' },
     price: { type: Number, required: true },
     offerPrice: { type: Number, required: true },
     image: { type: String, required: true },
@@ -17,6 +15,6 @@ const productSchema = new mongoose.Schema({
     },
 }, {minimize: false})
 
-const productModel = mongoose.models.product || mongoose.model('product', productSchema)
+const ProductModel = mongoose.models.product || mongoose.model('product', productSchema)
 
-export default productModel
+export default ProductModel
