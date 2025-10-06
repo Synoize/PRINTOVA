@@ -101,8 +101,8 @@ export const deleteProduct = async (req, res) => {
 // get all product API : /api/product/list
 export const getAllProducts = async (req, res) => {
     try {
-        const products = await ProductModel.find().sort({ createdAt: -1 }); // latest first
-        return res.json({ success: true, count: products.length, data: products });
+        const products = await ProductModel.find().sort({ createdAt: -1 });
+        return res.json({ success: true, products: products });
     } catch (error) {
         return res.json({ success: false, message: error.message });
     }
@@ -119,7 +119,7 @@ export const getSingleProduct = async (req, res) => {
             return res.json({ success: false, message: "Product not found" });
         }
 
-        return res.json({ success: true, data: product });
+        return res.json({ success: true, product: product });
     } catch (error) {
         return res.json({ success: false, message: error.message });
     }

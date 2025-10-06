@@ -174,7 +174,7 @@ const Login = () => {
         <button
           type="submit"
           disabled={loading}
-          className="bg-blue text-white w-full py-2 rounded-md text-base disabled:opacity-50"
+          className="bg-blue text-white w-full py-2 rounded-md text-base cursor-pointer disabled:opacity-50"
         >
           {loading ? <ButtonLoader /> : state === 'Sign Up' ? 'Sign Up' : 'Login'}
         </button>

@@ -10,6 +10,9 @@ const Shop = () => {
   const navigate = useNavigate();
   const { products, getProductsData, } = useContext(AppContext);
 
+  console.log(products);
+  
+
   const applyFilter = () => {
     if (category) {
       setFilterProduct(products.filter(product => product.category === category))
@@ -51,14 +54,14 @@ const Shop = () => {
             </p>
           ))}
         </div>
-        <div className='w-full grid grid-cols-2 sm:grid-cols-auto gap-4 gap-y-6 h-[74vh] overflow-y-scroll items-start'>
+        <div className='w-full grid grid-cols-3 sm:grid-cols-6 gap-4 gap-y-6 h-[74vh] overflow-y-scroll items-start'>
           {
-            filterProduct.map((item, index) => (
-              <div onClick={() => { navigate(`/shop/${item._id}`); scrollTo(0, 0) }} className='border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500' key={index}>
-                <img className='bg-blue-50 ' src={item.image} alt="" />
+            filterProduct?.map((item, index) => (
+              <div onClick={() => { navigate(`/shop/${item._id}`); scrollTo(0, 0) }} className='border border-gray-300 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500' key={index}>
+                <img className='bg-blue-50 w-full h-40 object-contain' src={item.image} alt="" />
                 <div className='p-4'>
                   <p className='text-gray-900 text-sm sm:text-lg font-medium'>{item.name}</p>
-                  <p className='text-gray-600 text-xs sm:text-sm'>{item.speciality}</p>
+                  <p className='text-gray-600 text-xs sm:text-sm'>{item.category}</p>
                 </div>
               </div>
             ))

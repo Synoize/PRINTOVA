@@ -12,6 +12,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import Login from './pages/Login';
 import MyProfile from './pages/MyProfile';
 import PartnerRegister from './pages/PartnerRegister';
+import ProductPage from './pages/ProductPage';
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
         <Route path={'/my-profile'} element={<MyProfile />} />
         <Route path={'/shop'} element={<Shop />} />
         <Route path={'/shop/:category'} element={<Shop />} />
-        <Route path={'/shop/:category/:productId'} element={<Shop />} />
+        <Route path={'/shop/:category/:productId'} element={<ProductPage />} />
         <Route path={'/about'} element={<About />} />
         <Route path={'/partner'} element={<PartnerRegister />} />
         <Route path={'/contact'} element={<Contact />} />

@@ -10,7 +10,7 @@ import { Route, Routes } from 'react-router-dom'
 import AddClient from './pages/Admin/AddClient';
 import ErrorPage from './pages/ErrorPage';
 import AddProduct from './pages/Admin/AddProduct';
-import OrderList from './pages/Admin/Orderlist';
+import OrderList from './pages/Admin/OrderList';
 import ClientList from './pages/Admin/ClientList';
 import UserList from './pages/Admin/UserList';
 import ProductList from './pages/Admin/ProductList';
@@ -28,22 +28,29 @@ const App = () => {
         <div className='max-h-screen w-full overflow-y-auto'>
           <Routes>
             {/* Admin Route */}
-            <Route path={'*'} element={<ErrorPage/>} />
-            <Route path={''} element={<></>} />
-            <Route path={'/dashboard'} element={<AddClient />} />
-            <Route path={'/products'} element={<ProductList />} />
-            <Route path={'/products/add'} element={<AddProduct />} />
-            <Route path={'/all-orders'} element={<OrderList />} />
-            <Route path={'/clients'} element={<ClientList />} />
-            <Route path={'/clients/add'} element={<AddClient />} />
-            <Route path={'/users'} element={<UserList />} />
-
-            {/* Client Route */}
-            <Route path={'/client-dashboard'} element={<AddClient />} />
-            <Route path={'/orders'} element={<AddClient />} />
-            <Route path={'/add-products'} element={<AddProduct />} />
-            <Route path={'/my-products'} element={<AddClient />} />
-            <Route path={'/client-profile'} element={<AddClient />} />
+            <Route path={'*'} element={<ErrorPage />} />
+            {
+              aToken ? (
+                <>
+                  <Route path={'/admin-dashboard'} element={<></>} />
+                  <Route path={'/products'} element={<ProductList />} />
+                  <Route path={'/products/add'} element={<AddProduct />} />
+                  <Route path={'/all-orders'} element={<OrderList />} />
+                  <Route path={'/clients'} element={<ClientList />} />
+                  <Route path={'/clients/add'} element={<AddClient />} />
+                  <Route path={'/users'} element={<UserList />} />
+                </>
+              ) : (
+                <>
+                  {/* Client Route */}
+                  <Route path={'/dashboard'} element={<AddClient />} />
+                  <Route path={'/orders'} element={<AddClient />} />
+                  <Route path={'/add-products'} element={<AddProduct />} />
+                  <Route path={'/my-products'} element={<AddClient />} />
+                  <Route path={'/client-profile'} element={<AddClient />} />
+                </>
+              )
+            }
           </Routes>
         </div>
       </div>

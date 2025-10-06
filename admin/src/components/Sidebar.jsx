@@ -37,7 +37,7 @@ const Sidebar = () => {
         }
         {
             cToken && <ul className='text-gray-600 mt-5'>
-                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-12 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/doctor-dashboard'}>
+                <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 w-12 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/dashboard'}>
                     <LayoutDashboard size={20} />
                     <p className='hidden sm:block'>Dashboard</p>
                 </NavLink>
