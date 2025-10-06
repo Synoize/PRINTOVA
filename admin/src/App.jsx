@@ -10,10 +10,10 @@ import { Route, Routes } from 'react-router-dom'
 import AddClient from './pages/Admin/AddClient';
 import ErrorPage from './pages/ErrorPage';
 import AddProduct from './pages/Admin/AddProduct';
-import OrderList from './pages/Admin/OrderList';
 import ClientList from './pages/Admin/ClientList';
 import UserList from './pages/Admin/UserList';
 import ProductList from './pages/Admin/ProductList';
+import OrderList from './pages/Admin/OrderList';
 
 const App = () => {
   const { aToken } = useContext(AdminContext)
