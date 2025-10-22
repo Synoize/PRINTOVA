@@ -23,7 +23,7 @@ const corsOptions = {
         "https://printova-admin.vercel.app",
         "https://printova-admin.com",
         "https://admin.printova.com",
-        "https://printova.in",
+        "https://www.printova.in",
         "https://admin.printova.in/"
     ],
     methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
