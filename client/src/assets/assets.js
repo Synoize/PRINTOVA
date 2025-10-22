@@ -112,14 +112,4 @@ export const categories = [
         name: "Business card",
         img: paperprinter
     },
-    {
-        id: 8,
-        name: "Stationary Print",
-        img: paperprinter
-    },
-    {
-        id: 9,
-        name: "Poster, flex & more",
-        img: paperprinter,
-    },
 ];

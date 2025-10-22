@@ -57,13 +57,12 @@ const HeaderSlider = () => {
             key={slide.id}
             className="flex flex-col-reverse md:flex-row items-center justify-between bg-[#E6E9F2] py-8 md:px-14 px-5 mt-2 md:mt-6 rounded-xl min-w-full"
           >
-            {/* Text content */}
-            <div className="md:pl-8 mt-10 md:mt-0">
+            <div className="md:pl-8 mt-10 md:mt-0 ">
               <p className="md:text-base text-blue pb-1">{slide.offer}</p>
               <h1 className="max-w-lg md:text-[40px] md:leading-[48px] text-2xl font-semibold">
                 {slide.title}
               </h1>
-              <div className="flex items-start md:items-center md:gap-6 gap-4 mt-4 md:mt-6">
+              <div className="flex items-start md:items-center md:gap-6 gap-4 mt-8 md:mt-14">
                 <button className="md:px-10 px-7 md:py-2.5 py-2 bg-blue rounded-full text-white font-medium cursor-pointer">
                   {slide.buttonText1}
                 </button>
@@ -74,7 +73,6 @@ const HeaderSlider = () => {
               </div>
             </div>
 
-            {/* Image content */}
             <div className="flex items-center flex-1 justify-center">
               <img
                 className="md:w-72 w-48"

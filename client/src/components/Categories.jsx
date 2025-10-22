@@ -20,7 +20,7 @@ const Categories = () => {
                     <Link onClick={() => scrollTo(0,0)} key={index} to={`/shop/${category.name}`} className="flex flex-col items-center hover:-translate-y-1 transition duration-300 cursor-pointer">
                         <div
                             key={category.id}
-                            className="p-2 md:p-4 mb-3 rounded-lg border border-gray-400 "
+                            className="p-2 md:p-4 mb-3 rounded-lg border border-gray-300 "
                         >
                             <img
                                 src={category.img}

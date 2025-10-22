@@ -20,7 +20,7 @@ const AppContextProvider = (props) => {
     const getProductsData = async () => {
         try {
             const { data } = await axios.get(`${backendUrl}/api/product/list`)
-
+            
             if (data?.success) {
                 setProducts(data.products)
             } else {
@@ -32,6 +32,7 @@ const AppContextProvider = (props) => {
         }
     }
 
+    // Get User Profile Data
     const getUserProfileData = async () => {
         try {
             const { data } = await axios.get(`${backendUrl}/api/user/get-profile`, { headers: { Authorization: `Bearer ${token}` } })
