@@ -3,22 +3,23 @@ import { useParams } from "react-router-dom";
 import { AppContext } from '../context/AppContext';
 import { toast } from 'react-toastify';
 import MainLoader from '../components/MainLoader';
+import RecommendedProduct from '../components/RecommendedProduct';
 
 const ProductPage = () => {
   const { productId } = useParams();
   const { backendUrl, axios } = useContext(AppContext);
 
   const [productData, setProductData] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  console.log("id:" , productId);
+  console.log("id:", productId);
 
   const getSingleProductData = async () => {
     try {
       const { data } = await axios.get(`${backendUrl}/api/product/${productId}`);
 
       console.log(data);
-      
+
       if (data?.success) {
         setProductData(data.product);
       } else {
@@ -57,14 +58,15 @@ const ProductPage = () => {
     <div className="px-6 md:px-16 lg:px-32 pt-14 space-y-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
         <div className="px-5 lg:px-16 xl:px-20">
-          <div className="rounded-lg overflow-hidden bg-gray-500/10 mb-4 p-4">
+          <div className="rounded-lg overflow-hidden  bg-gray-500/10 mb-4 p-4 flex justify-center items-center">
             <img
               src={productData.image}
-              alt={productData.name}
-              className="w-full h-auto object-cover mix-blend-multiply"
+              alt={productData.name || "Product"}
+              className="w-full h-auto object-cover mix-blend-multiply transition-transform duration-300 hover:scale-105"
             />
           </div>
         </div>
+
 
         <div className="flex flex-col">
           <h1 className="text-3xl font-medium text-gray-800/90 mb-4">
@@ -86,7 +88,7 @@ const ProductPage = () => {
           <div className="overflow-x-auto">
             <table className="table-auto border-collapse w-full max-w-72">
               <tbody>
-               
+
                 <tr>
                   <td className="text-gray-600 font-medium">Category</td>
                   <td className="text-gray-800/50">
@@ -107,15 +109,8 @@ const ProductPage = () => {
           </div>
         </div>
       </div>
-      
-      <div className="flex flex-col items-center">
-        <div className="flex flex-col items-center mb-4 mt-16">
-          <p className="text-3xl font-medium">
-            Featured <span className="text-blue">Products</span>
-          </p>
-          <div className="w-28 h-0.5 bg-blue mt-2"></div>
-        </div>
-      </div>
+
+      <RecommendedProduct />
     </div>
   );
 };
