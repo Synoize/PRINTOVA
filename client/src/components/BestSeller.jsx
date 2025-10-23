@@ -20,7 +20,7 @@ const Bestseller = () => {
       </div>
 
       <div className="flex justify-center mt-8 ">
-        <button className="flex items-center gap-2 text-gray-600 border border-gray-400 px-6 py-2 rounded hover:text-[#013e70] font-medium cursor-pointer group">
+        <button onClick={() => { navigate(`/shop`); scrollTo(0, 0) }} className="flex items-center gap-2 text-gray-600 border border-gray-400 px-6 py-2 rounded hover:text-[#013e70] font-medium cursor-pointer group">
           See more <MoveRightIcon className=' group-hover:text-[#013e70] group-hover:translate-x-1 transition duration-300' />
         </button>
       </div>

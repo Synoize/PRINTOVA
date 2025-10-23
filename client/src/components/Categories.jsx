@@ -1,16 +1,18 @@
 import React from "react";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { categories } from "../assets/assets";
 import { MoveRightIcon } from "lucide-react";
 
 const Categories = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="pb-10">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl md:text-2xl font-semibold">
                     Explore all Categories
                 </h2>
-                <button className="flex items-center gap-2 text-gray-600 text-nowrap border border-gray-400 px-4 md:px-6 py-2 rounded-full hover:text-[#013e70] font-medium cursor-pointer group text-sm">
+                <button onClick={() => { navigate(`/shop`); scrollTo(0, 0) }} className="flex items-center gap-2 text-gray-600 text-nowrap border border-gray-400 px-4 md:px-6 py-2 rounded-full hover:text-[#013e70] font-medium cursor-pointer group text-sm">
                     See more <MoveRightIcon className=' group-hover:text-[#013e70] group-hover:translate-x-1 transition duration-300' />
                 </button>
             </div>

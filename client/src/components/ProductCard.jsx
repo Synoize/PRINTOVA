@@ -14,7 +14,7 @@ const ProductCard = ({product}) => {
             </div>
 
             <div className="p-4 pt-2">
-                <h3 className="font-semibold text-sm md:text-lg line-clamp-1">{product.name}</h3>
+                <h3 className="text-sm md:text-lg line-clamp-1">{product.name}</h3>
                 <p className="text-gray-500 text-xs md:text-sm line-clamp-2">{product.description}</p>
 
                 <div className="flex items-center mb-1">
@@ -28,7 +28,7 @@ const ProductCard = ({product}) => {
                 </div>
 
                 <div className="flex justify-between items-center gap-2 ">
-                    <p className="text-lg font-medium text-gray-800">₹{product.offerPrice}<strike className="text-xs text-gray-400 font-normal ml-1">{product.price}</strike></p>
+                    <p className="text-lg text-gray-800">₹{product.offerPrice}<strike className="text-xs text-gray-400 font-normal ml-1">{product.price}</strike></p>
                     <button className="text-xs md:text-sm text-nowrap px-2 md:px-4 py-2 border rounded-md border-gray-400 hover:bg-gray-100 transition-colors">
                         Buy Now
                     </button>

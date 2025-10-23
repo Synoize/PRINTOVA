@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useParams } from "react-router-dom";
 import { AppContext } from '../context/AppContext';
 import { toast } from 'react-toastify';
@@ -7,18 +7,15 @@ import RecommendedProduct from '../components/RecommendedProduct';
 
 const ProductPage = () => {
   const { productId } = useParams();
-  const { backendUrl, axios } = useContext(AppContext);
+  const { backendUrl, axios, products, getProductsData } = useContext(AppContext);
 
+  const productInfo = useMemo(() => products.find(product => product._id === productId), [products, productId]);
   const [productData, setProductData] = useState({});
   const [loading, setLoading] = useState(true);
-
-  console.log("id:", productId);
 
   const getSingleProductData = async () => {
     try {
       const { data } = await axios.get(`${backendUrl}/api/product/${productId}`);
-
-      console.log(data);
 
       if (data?.success) {
         setProductData(data.product);
@@ -35,6 +32,7 @@ const ProductPage = () => {
   useEffect(() => {
     if (productId) {
       getSingleProductData();
+      getProductsData();
     }
   }, [productId]);
 
@@ -69,7 +67,7 @@ const ProductPage = () => {
 
 
         <div className="flex flex-col">
-          <h1 className="text-3xl font-medium text-gray-800/90 mb-4">
+          <h1 className="text-3xl text-gray-800/90 mb-4">
             {productData.name}
           </h1>
 
@@ -79,7 +77,7 @@ const ProductPage = () => {
               : productData.description}
           </p>
 
-          <p className="text-3xl font-medium mt-6">
+          <p className="text-3xl mt-6">
             ₹{productData.price}
           </p>
 
@@ -90,7 +88,7 @@ const ProductPage = () => {
               <tbody>
 
                 <tr>
-                  <td className="text-gray-600 font-medium">Category</td>
+                  <td className="text-gray-600">Category</td>
                   <td className="text-gray-800/50">
                     {productData.category}
                   </td>
@@ -110,7 +108,7 @@ const ProductPage = () => {
         </div>
       </div>
 
-      <RecommendedProduct />
+      <RecommendedProduct productId={productId} category={productInfo?.category} />
     </div>
   );
 };
