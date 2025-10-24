@@ -2,7 +2,7 @@ import { Star } from 'lucide-react'
 import React from 'react'
 
 const ProductCard = ({product}) => {
-    
+
     return (
         <div className="rounded-lg border border-gray-300 hover:-translate-y-1 transition duration-300 cursor-pointer">
             <div className="bg-gray-100 h-32 md:h-38 w-full rounded-t-lg">
@@ -17,14 +17,15 @@ const ProductCard = ({product}) => {
                 <h3 className="text-sm md:text-lg line-clamp-1">{product.name}</h3>
                 <p className="text-gray-500 text-xs md:text-sm line-clamp-2">{product.description}</p>
 
-                <div className="flex items-center mb-1">
-                    <span className="text-yellow-400 space-x-1">
-                        <Star className='inline-block h-4 w-4 mb-0.5' />
-                        <Star className='inline-block h-4 w-4 mb-0.5' />
-                        <Star className='inline-block h-4 w-4 mb-0.5' />
-                        <Star className='inline-block h-4 w-4 mb-0.5' />
+                <div className="flex items-center my-1">
+                    <span className="space-x-1 flex ">
+                        {
+                            Array.from({ length: product.rating === "" || product.rating}, (_, index) => (
+                                <Star key={index} className='inline-block h-3.5 w-3.5 mb-0.5 text-yellow-400' />
+                            ))
+                        }
                     </span>
-                    <span className="ml-2 text-gray-600 text-sm">{product.rating}</span>
+                    <span className="ml-2 text-gray-600 text-sm">{product.rating || 0}</span>
                 </div>
 
                 <div className="flex justify-between items-center gap-2 ">

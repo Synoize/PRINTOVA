@@ -60,7 +60,7 @@ const Navbar = () => {
                             </div>
                         )
                     }
-                    
+
                     {token && userData
                         ? (
                             <div className='flex items-center gap-2 cursor-pointer group relative z-20'>
@@ -87,16 +87,33 @@ const Navbar = () => {
 
                     {/* Mobile Menu */}
                     <div className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 z-50 overflow-hidden bg-white transition-all`}>
+                        <div className='flex justify-between items-center text-sm bg-blue py-4 px-4 md:px-10 text-white'>
+                            <p className='flex items-center gap-2'><Mail /> info@printcreation.com</p>
+                            <p className='items-center gap-2 hidden md:flex'><TicketPercent /> Get more deals with offer</p>
+                            <p className='items-center gap-2 hidden md:flex'><Clock /> 24 * 7 hours available</p>
+                        </div>
                         <div className='flex items-center justify-between px-4 py-4'>
                             <img className='w-34' src={assets.logo} alt="" />
                             <X className='w-7 cursor-pointer' onClick={() => setShowMenu(false)} />
                         </div>
-                        <ul className='flex flex-col items-center gap-2 mt-5 px-5 text-sm font-medium'>
-                            <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/'}><p className='px-8 py-2 rounded-full inline-block'>HOME</p></NavLink>
-                            <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/shop'}><p className='px-8 py-2 rounded-full inline-block'>SHOP</p></NavLink>
-                            <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/about'}><p className='px-8 py-2 rounded-full inline-block'>ABOUT</p></NavLink>
-                            <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/contact'}><p className='px-8 py-2 rounded-full inline-block'>CONTACT</p></NavLink>
-                            {!token && <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/login'}><p className='px-8 py-2 rounded-full inline-block'>LOGIN</p></NavLink> }
+                        <ul className={`flex flex-col items-center gap-5 mt-5 px-5 text-sm font-medium`}>
+                            <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/'}>
+                                <li className='py-1'>HOME</li>
+                                <hr className='border-none outline-none h-0.5 bg-blue w-3/5 m-auto hidden rounded-full' />
+                            </NavLink>
+                            <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/shop'}>
+                                <li className='py-1'>SHOP</li>
+                                <hr className='border-none outline-none h-0.5 bg-blue w-3/5 m-auto hidden rounded-full' />
+                            </NavLink>
+                            <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/about'}>
+                                <li className='py-1'>ABOUT</li>
+                                <hr className='border-none outline-none h-0.5 bg-blue w-3/5 m-auto hidden rounded-full' />
+                            </NavLink>
+                            <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/contact'}>
+                                <li className='py-1'>CONTACT</li>
+                                <hr className='border-none outline-none h-0.5 bg-blue w-3/5 m-auto hidden rounded-full' />
+                            </NavLink>
+                            {!token ? <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/login'}><p className='px-8 py-2 rounded-full inline-block'>LOGIN</p></NavLink> : <p onClick={() => { setShowMenu(false); scrollTo(0, 0); setShowConfirm(true) }} className='text-red-600 hover:text-red-500 cursor-pointer'>LOGOUT</p>}
                         </ul>
                     </div>
                 </div>

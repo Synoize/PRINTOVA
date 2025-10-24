@@ -4,6 +4,7 @@ import { AppContext } from '../context/AppContext';
 import { toast } from 'react-toastify';
 import MainLoader from '../components/MainLoader';
 import RecommendedProduct from '../components/RecommendedProduct';
+import { Star } from 'lucide-react';
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -77,8 +78,19 @@ const ProductPage = () => {
               : productData.description}
           </p>
 
+          <div className="flex items-center mt-5">
+            <span className="space-x-1 flex ">
+              {
+                Array.from({ length: productData.rating === "" || productData.rating }, (_, index) => (
+                  <Star key={index} className='inline-block h-5 w-5 mb-0.5 text-yellow-400' />
+                ))
+              }
+            </span>
+            <span className="ml-2 text-gray-600">{productData.rating || 0}</span>
+          </div>
+
           <p className="text-3xl mt-6">
-            ₹{productData.price}
+            ₹{productData.offerPrice} <strike className="text-lg text-gray-400 font-normal ml-1">{productData.price}</strike>
           </p>
 
           <hr className="bg-gray-600 my-6" />

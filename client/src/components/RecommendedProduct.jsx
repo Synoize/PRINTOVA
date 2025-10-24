@@ -4,7 +4,7 @@ import ProductCard from "./ProductCard";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
-const RecommendedProduct = ({productId, category}) => {
+const RecommendedProduct = ({ productId, category }) => {
 
     const navigate = useNavigate();
     const { products } = useContext(AppContext);
@@ -17,7 +17,7 @@ const RecommendedProduct = ({productId, category}) => {
             setRelProducts(productsData)
         }
     }, [products, category, productId]);
-    
+
     return (
         <div>
             <div className="flex flex-col items-center mb-10 mt-16">
@@ -34,6 +34,14 @@ const RecommendedProduct = ({productId, category}) => {
                     </div>
                 ))}
             </div>
+
+            {
+                relProducts.length === 0 && (
+                    <div className="text-center text-red-600 ">
+                        No recommended products available.
+                    </div>
+                )
+            }
 
             <div className="flex justify-center my-8 ">
                 <button onClick={() => { navigate(`/shop/${category}`); scrollTo(0, 0) }} className="flex items-center gap-2 text-gray-600 border border-gray-400 px-6 py-2 rounded hover:text-[#013e70] font-medium cursor-pointer group">
