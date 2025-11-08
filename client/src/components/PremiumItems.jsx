@@ -1,10 +1,17 @@
 import React from 'react';
-import { premiumItems } from '../assets/assets';
 import { useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard';
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
+import { useEffect } from 'react';
 
 const PremiumItems = () => {
     const navigate = useNavigate();
+    const { products, getProductsData } = useContext(AppContext);
+
+    useEffect(() => {
+        getProductsData();
+    }, []);
 
     return (
         <div>
@@ -12,8 +19,8 @@ const PremiumItems = () => {
 
             <div className='w-full overflow-x-scroll pt-6'>
                 <div className="flex gap-6">
-                    {premiumItems.map((product, index) => (
-                        <div key={index} onClick={() => navigate(`/${product.category}/${product.id}`)}>
+                    {products.slice(0, 15).map((product, index) => (
+                        <div key={index} onClick={() => { navigate(`/${product.category}/${product._id}`); scrollTo(0, 0) }}>
                             <ProductCard product={product} />
                         </div>
                     ))}

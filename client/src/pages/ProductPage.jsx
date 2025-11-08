@@ -14,6 +14,30 @@ const ProductPage = () => {
   const [productData, setProductData] = useState({});
   const [loading, setLoading] = useState(true);
 
+  // product quantity
+  const [quantity, setQuantity] = useState(1);
+  const increment = () => setQuantity(prev => prev + 1);
+  const decrement = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+
+  // product price
+  const delivery = 50;
+  const taxRate = 0.05;
+
+  const subtotal = productData.offerPrice * quantity;
+  const tax = subtotal * taxRate;
+  const otherCharges = 0;
+  const total = subtotal + delivery + tax + otherCharges;
+
+  // uploaded design preview
+  const [preview, setPreview] = useState(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
   const getSingleProductData = async () => {
     try {
       const { data } = await axios.get(`${backendUrl}/api/product/${productId}`);
@@ -78,6 +102,12 @@ const ProductPage = () => {
               : productData.description}
           </p>
 
+          <div>
+            <button className="text-sm mt-6 px-6 p-2 text-[#013e70] border border-[#013e70] rounded-full hover:bg-[#013e70]/5 transition-all duration-300 ease-in-out ">
+              {productData.category}
+            </button>
+          </div>
+
           <div className="flex items-center mt-5">
             <span className="space-x-1 flex ">
               {
@@ -93,21 +123,135 @@ const ProductPage = () => {
             ₹{productData.offerPrice} <strike className="text-lg text-gray-400 font-normal ml-1">{productData.price}</strike>
           </p>
 
-          <hr className="bg-gray-600 my-6" />
+          <hr className="text-gray-300 my-6" />
 
-          <div className="overflow-x-auto">
-            <table className="table-auto border-collapse w-full max-w-72">
-              <tbody>
-
-                <tr>
-                  <td className="text-gray-600">Category</td>
-                  <td className="text-gray-800/50">
-                    {productData.category}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div>
+            <h2 className="text-lg font-medium mb-2">Delivery</h2>
+            <div className='grid grid-cols-2'>
+              <input
+                type="number"
+                placeholder="Enter Pincode"
+                className="w-full p-2 border border-gray-300 outline-none focus:border-[#013e70]"
+              />
+              <button className='text-[#013e70] items-start justify-self-start ml-3 cursor-pointer'>Check</button>
+            </div>
           </div>
+
+          <div>
+            <h2 className="text-lg font-medium mt-6 mb-2">Available Offers</h2>
+            <div className="space-y-3 flex justify-between items-center">
+              <ul className="list-disc list-inside space-y-1 text-gray-600">
+                {productData.offers && productData.offers.length > 0 ? (
+                  productData.offers.map((offer, index) => (
+                    <li key={index}>{offer}</li>
+                  ))
+                ) : (
+                  <li>No offers available</li>
+                )}
+              </ul>
+              <input type="number" placeholder='Enter Coupon Code' className='p-2 outline-none border border-gray-300 focus:border-[#013e70]' />
+            </div>
+          </div>
+
+          {
+            productData.category === "Business card" ? (
+              <div>
+                <h2 className="text-lg font-medium mt-6 mb-2">Select Orientation</h2>
+                <div className='flex space-x-3'>
+                  <button className='border px-4 p-2 rounded border-gray-300 focus:text-[#013e70] focus:border-[#013e70] cursor-pointer'>Portraite</button>
+                  <button className='border px-4 p-2 rounded border-gray-300 focus:text-[#013e70] focus:border-[#013e70] cursor-pointer'>Landscape</button>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <h2 className="text-lg font-medium mt-6 mb-2">Select Types</h2>
+                <div className='flex space-x-3'>
+                  <button className='border px-4 p-2 rounded border-gray-300 focus:text-[#013e70] focus:border-[#013e70] cursor-pointer'>Standard</button>
+                  <button className='border px-4 p-2 rounded border-gray-300 focus:text-[#013e70] focus:border-[#013e70] cursor-pointer'>Polo</button>
+                </div>
+              </div>
+            )
+          }
+
+          <div>
+            <h2 className="text-lg font-medium mt-6 mb-2">Select Quality</h2>
+            <div className='flex space-x-3'>
+              <button className='border px-4 p-2 rounded border-gray-300 focus:text-[#013e70] focus:border-[#013e70] cursor-pointer'>Standard</button>
+              <button className='border px-4 p-2 rounded border-gray-300 focus:text-[#013e70] focus:border-[#013e70] cursor-pointer'>Premium</button>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-medium mt-6 mb-2">Quantity</h2>
+            <div className="flex items-center border border-gray-300 w-fit rounded overflow-hidden">
+              <button
+                onClick={decrement}
+                className="px-4 py-2 text-lg bg-[#013e70]/5 hover:bg-[#013e70]/10 cursor-pointer"
+              >
+                −
+              </button>
+              <input
+                type="number"
+                value={quantity}
+                readOnly
+                className="w-12 text-center outline-none"
+              />
+              <button
+                onClick={increment}
+                className="px-4 py-2 text-lg bg-[#013e70]/5 hover:bg-[#013e70]/10 cursor-pointer"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-medium mt-6 mb-2">Upload Design</h2>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="w-52 p-2 border border-gray-300 outline-none focus:border-[#013e70] cursor-pointer rounded"
+            />
+
+            {preview && (
+              <img
+                src={preview}
+                alt="Uploaded design"
+                className="w-40 h-40 mt-4 object-cover rounded"
+              />
+            )}
+          </div>
+
+          <hr className="text-gray-300 my-6" />
+
+          <div>
+            <h2 className="text-lg font-medium mb-2">Detailed Bill</h2>
+            <div className="border border-gray-300 rounded-lg p-4">
+              <div className="flex items-center justify-between mb-2">
+                <p className="flex items-center gap-1">Subtotal <span className='text-red-500 text-sm'>({quantity})</span> </p>
+                <p>₹{subtotal.toFixed(2)}</p>
+              </div>
+              <div className="flex justify-between mb-2">
+                <span>Delivery Charges</span>
+                <span>₹{delivery}</span>
+              </div>
+              <div className="flex justify-between mb-2">
+                <span>Tax (5%)</span>
+                <span>₹{tax.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between mb-2">
+                <span>Other Charges</span>
+                <span>₹{otherCharges.toFixed(2)}</span>
+              </div>
+              <hr className="my-2" />
+              <div className="flex justify-between font-medium text-lg">
+                <span>Total</span>
+                <span>₹{total.toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+          <hr className="text-gray-300 mt-2 " />
 
           <div className="flex items-center mt-10 gap-4">
             <button className="w-full py-3.5 bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition cursor-pointer">

@@ -2,12 +2,14 @@ import upload_area from './upload_area.png'
 import razorpay_logo from './razorpay_logo.png'
 import logo from './logo.svg'
 import paperprinter from './paperprinter.png'
+import business_card from './business_card.png'
 
 export const assets = {
     upload_area,
     razorpay_logo,
     logo,
     paperprinter,
+    business_card,
 }
 
 export const users = [
@@ -100,7 +102,7 @@ export const categories = [
     {
         id: 5,
         name: "Visiting card",
-        img: paperprinter
+        img: business_card
     },
     {
         id: 6,
@@ -110,6 +112,6 @@ export const categories = [
     {
         id: 7,
         name: "Business card",
-        img: paperprinter
+        img: business_card
     },
 ];
