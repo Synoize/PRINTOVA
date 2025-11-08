@@ -139,7 +139,7 @@ const ProductPage = () => {
 
           <div>
             <h2 className="text-lg font-medium mt-6 mb-2">Available Offers</h2>
-            <div className="space-y-3 flex justify-between items-center">
+            <div className="space-y-3 flex flex-col md:flex-row justify-between items-start md:items-center">
               <ul className="list-disc list-inside space-y-1 text-gray-600">
                 {productData.offers && productData.offers.length > 0 ? (
                   productData.offers.map((offer, index) => (
