@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 
 const orderSchema = new mongoose.Schema({
     userId: { type: String, ref: "user", required: true },
-    clientId: { type: String, ref: "client", required: true },
+    clientId: { type: String, ref: "client", default: null },
     productId: { type: String, ref: "product", required: true },
     productData: { type: Object, required: true },
     userData: { type: Object, required: true },
-    clientData: { type: Object, required: true },
+    clientData: { type: Object, default: {} },
     customProduct: {
         type: Object, default: {
             uploaded_design: '',
@@ -19,6 +19,7 @@ const orderSchema = new mongoose.Schema({
     },
     quantity: { type: Number, default: 1 },
     address: { type: String, required: true },
+    totalPrice: { type: Number, required: true},
     status: {
         type: String,
         enum: ["pending", "confirmed", "dispatch", "completed", "cancelled"],

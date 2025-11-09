@@ -13,6 +13,7 @@ const AppContextProvider = (props) => {
 
     const [userData, setUserData] = useState(false);
     const [products, setProducts] = useState([])
+    const [cart, setCart] = useState([]);
 
     const [keyword, setKeyword] = useState('');
 
@@ -61,7 +62,8 @@ const AppContextProvider = (props) => {
         token, setToken,
         userData, setUserData,
         products, setProducts, getProductsData,
-        keyword, setKeyword, getUserProfileData
+        keyword, setKeyword, getUserProfileData,
+        cart, setCart,
     }
 
     return (

@@ -71,7 +71,7 @@ const Navbar = () => {
                                         <p onClick={() => navigate('/my-profile')} className='hover:text-black cursor-pointer'>My Profile</p>
                                         <p onClick={() => navigate('/cart')} className='hover:text-black cursor-pointer'>Cart</p>
                                         <p onClick={() => navigate('/my-orders')} className='hover:text-black cursor-pointer'>My Orders</p>
-                                        <p onClick={() => { setShowConfirm(true) }} className='hover:text-black cursor-pointer'>Logout</p>
+                                        <p onClick={() => { setShowConfirm(true) }} className='text-red-500 cursor-pointer'>Logout</p>
                                     </div>
                                 </div>
                                 {

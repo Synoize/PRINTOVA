@@ -13,10 +13,12 @@ import Login from './pages/Login';
 import MyProfile from './pages/MyProfile';
 import PartnerRegister from './pages/PartnerRegister';
 import ProductPage from './pages/ProductPage';
+import CartPage from './pages/CartPage';
+import MyOrdersPage from './pages/MyOrdersPage';
 
 function App() {
   return (
-    <div className=' container mx-auto'>
+    <div className='bg-white container mx-auto'>
       <ToastContainer />
 
       <Navbar />
@@ -25,9 +27,11 @@ function App() {
         <Route path={'/'} element={<Home />} />
         <Route path={'/login'} element={<Login />} />
         <Route path={'/my-profile'} element={<MyProfile />} />
+        <Route path={'/cart'} element={<CartPage />} />
         <Route path={'/shop'} element={<Shop />} />
         <Route path={'/shop/:category'} element={<Shop />} />
         <Route path={'/:category/:productId'} element={<ProductPage />} />
+        <Route path={'/my-orders'} element={<MyOrdersPage />} />
         <Route path={'/about'} element={<About />} />
         <Route path={'/partner'} element={<PartnerRegister />} />
         <Route path={'/contact'} element={<Contact />} />

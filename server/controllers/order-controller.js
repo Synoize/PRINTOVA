@@ -3,23 +3,25 @@ import OrderModel from "../models/order-model.js";
 
 export const createOrder = async (req, res) => {
   try {
-    const { userId, clientId, productId, productData, userData, clientData, customProduct, quantity, address } = req.body;
+    const { userId, productId, productData, userData, customProduct, quantity, address, totalPrice } = req.body;
 
-    if (!userId || !clientId || !productId || !address) {
+    if (!userId || !clientId || !productId || !address || !totalPrice) {
       return res.status(400).json({ success: false, message: "Missing required fields" });
     }
 
     const newOrder = new OrderModel({
       userId,
-      clientId,
       productId,
       productData,
       userData,
-      clientData,
+      customProduct,
+      quantity,
+      address, 
+      totalPrice,
     });
 
-    const savedOrder = await newOrder.save();
-    return res.status(201).json({ success: true, data: savedOrder });
+    const order = await newOrder.save();
+    return res.status(201).json({ success: true, order: order });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }

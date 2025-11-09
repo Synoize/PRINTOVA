@@ -22,14 +22,14 @@ const RecommendedProduct = ({ productId, category }) => {
         <div>
             <div className="flex flex-col items-center mb-10 mt-16">
                 <p className="text-3xl font-medium">
-                    Featured <span className="text-blue">Products</span>
+                    Recommended <span className="text-blue">Products</span>
                 </p>
                 <div className="w-28 h-0.5 bg-blue mt-2"></div>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                 {relProducts.slice(0, 5).map((product, index) => (
-                    <div key={index} onClick={() => navigate(`/${product.category}/${product.id}`)}>
+                    <div key={index} onClick={() => navigate(`/${product.category}/${product._id}`)}>
                         <ProductCard product={product} />
                     </div>
                 ))}

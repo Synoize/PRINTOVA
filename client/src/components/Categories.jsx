@@ -18,7 +18,7 @@ const Categories = () => {
             </div>
 
             <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-9 gap-6">
-                {categories.map((category, index) => (
+                {categories.slice(0, 9).map((category, index) => (
                     <Link onClick={() => scrollTo(0,0)} key={index} to={`/shop/${category.name}`} className="flex flex-col items-center hover:-translate-y-1 transition duration-300 cursor-pointer">
                         <div
                             key={category.id}

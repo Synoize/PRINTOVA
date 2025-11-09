@@ -14,7 +14,11 @@ const columns = [
   },
   { accessorKey: "name", header: "Name" },
   { accessorKey: "category", header: "Category" },
-  { accessorKey: "description", header: "Description" },
+  {
+    accessorKey: "description", header: "Description", Cell: ({ row }) => (
+      <p className=" line-clamp-2">{row.original.description}</p>
+    ),
+  },
   { accessorKey: "rating", header: "Rating" },
   { accessorKey: "price", header: "Price" },
   { accessorKey: "offerPrice", header: "Offer Price" },

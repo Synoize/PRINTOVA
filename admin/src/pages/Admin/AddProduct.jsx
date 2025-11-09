@@ -168,6 +168,9 @@ const AddProduct = () => {
               <option value="Visiting card">Visiting card</option>
               <option value="Labels, Stickers & Packaging">Labels, Stickers & Packaging</option>
               <option value="Business card">Business card</option>
+              <option value="Booklet">Booklet</option>
+              <option value="Report Prints">Report Prints</option>
+              <option value="Wedding Card">Wedding Card</option>
             </select>
           </div>
 

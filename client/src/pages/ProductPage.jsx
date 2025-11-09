@@ -8,7 +8,7 @@ import { Star } from 'lucide-react';
 
 const ProductPage = () => {
   const { productId } = useParams();
-  const { backendUrl, axios, products, getProductsData } = useContext(AppContext);
+  const { backendUrl, axios, token, products, getProductsData } = useContext(AppContext);
 
   const productInfo = useMemo(() => products.find(product => product._id === productId), [products, productId]);
   const [productData, setProductData] = useState({});
@@ -38,6 +38,51 @@ const ProductPage = () => {
     }
   };
 
+  // find location by pincode
+  const [loadingLocation, setLoadingLocation] = useState(false);
+  const [pincode, setPincode] = useState();
+  const [location, setLocation] = useState(null);
+
+  const getLocationByPincode = async (event) => {
+    event.preventDefault();
+    setLoadingLocation(true);
+    try {
+      const { data } = await axios.get(`https://api.postalpincode.in/pincode/${pincode}`);
+
+      if (data[0]?.Status === "Success") {
+        setLocation(data[0].PostOffice[0]);
+      } else {
+        setLocation(null);
+        toast.error(data[0].Message);
+      }
+    } catch (error) {
+      toast.error(error.Message);
+    } finally {
+      setLoadingLocation(false);
+    }
+  };
+
+  // add to user cart
+  const [loadingCart, setLoadingCart] = useState(false);
+
+  const addUserCart = async () => {
+    setLoadingCart(true);
+    try {
+      const { data } = await axios.post(`${backendUrl}/api/user/cart`, { headers: { Authorization: `Bearer ${token}` } });
+
+      if (data?.success) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoadingCart(false);
+    }
+  }
+
+  // get single product data
   const getSingleProductData = async () => {
     try {
       const { data } = await axios.get(`${backendUrl}/api/product/${productId}`);
@@ -127,14 +172,26 @@ const ProductPage = () => {
 
           <div>
             <h2 className="text-lg font-medium mb-2">Delivery</h2>
-            <div className='grid grid-cols-2'>
-              <input
-                type="number"
-                placeholder="Enter Pincode"
-                className="w-full p-2 border border-gray-300 outline-none focus:border-[#013e70]"
-              />
-              <button className='text-[#013e70] items-start justify-self-start ml-3 cursor-pointer'>Check</button>
-            </div>
+            <form onSubmit={getLocationByPincode} className='grid grid-cols-2'>
+              <div className='flex w-40 '>
+                <input
+                  type="number"
+                  onChange={(e) => setPincode(e.target.value)}
+                  value={pincode}
+                  required
+                  placeholder="Enter Pincode"
+                  className="w-full p-2 border border-gray-300 outline-none focus:border-[#013e70]" />
+                {loadingLocation && (
+                  <div className="flex justify-center items-center gap-2  m-1">
+                    <div className="h-4 w-4 border-2 border-[#013e70] border-t-transparent rounded-full animate-spin"></div>
+                  </div>
+                )}
+              </div>
+              <button type='submit' className='text-[#013e70] items-start md:justify-self-start ml-3 cursor-pointer'>Check</button>
+            </form>
+            {location && (
+              <p className='text-sm mt-2 line-clamp-1'>{location.Pincode}, {location.Name}, {location.District}, {location.State}, {location.Country}</p>
+            )}
           </div>
 
           <div>
@@ -255,8 +312,14 @@ const ProductPage = () => {
           <hr className="text-gray-300 mt-2 " />
 
           <div className="flex items-center mt-10 gap-4">
-            <button className="w-full py-3.5 bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition cursor-pointer">
-              Add to Cart
+            <button onClick={() => addUserCart()} className="w-full py-3.5 bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition cursor-pointer">
+              {
+                loadingCart ? (
+                  <div className="flex justify-center items-center gap-2  m-1">
+                    <div className="h-4 w-4 border-2 border-[#013e70] border-t-transparent rounded-full animate-spin"></div>
+                  </div>
+                ) : "Add to Cart"
+              }
             </button>
             <button className="w-full py-3.5 bg-[#013e70]/90 text-white hover:bg-[#013e70] transition cursor-pointer">
               Buy Now
