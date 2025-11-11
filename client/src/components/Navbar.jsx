@@ -71,10 +71,10 @@ const Navbar = () => {
                                     hovered && <>
                                         <div className='absolute top-1 right-0 pt-14 text-base font-medium text-gray-600 x-20 z-50'>
                                             <div className='border-t-4 border-[#013e70] min-w-48 bg-slate-50 rounded flex flex-col gap-4 p-4'>
-                                                <p onClick={() => navigate('/my-profile')} className='hover:text-black cursor-pointer'>My Profile</p>
-                                                <p onClick={() => navigate('/cart')} className='hover:text-black cursor-pointer'>Cart</p>
-                                                <p onClick={() => navigate('/my-orders')} className='hover:text-black cursor-pointer'>My Orders</p>
-                                                <p onClick={() => { setShowConfirm(true) }} className='text-red-500 cursor-pointer'>Logout</p>
+                                                <p onClick={() => { navigate('/my-profile'); setHovered(false); scrollTo(0, 0) }} className='hover:text-black cursor-pointer'>My Profile</p>
+                                                <p onClick={() => { navigate('/cart'); setHovered(false); scrollTo(0, 0) }} className='hover:text-black cursor-pointer'>Cart</p>
+                                                <p onClick={() => { navigate('/my-orders'); setHovered(false); scrollTo(0, 0) }} className='hover:text-black cursor-pointer'>My Orders</p>
+                                                <p onClick={() => { setShowConfirm(true); setHovered(false); scrollTo(0, 0) }} className='text-red-500 cursor-pointer'>Logout</p>
                                             </div>
                                         </div>
                                         {

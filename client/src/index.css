@@ -4,9 +4,10 @@
 
 @import "tailwindcss";
 
-/* *{
-    font-family: Outfit;
-} */
+*{
+    /* font-family: Outfit; */
+    scroll-behavior: smooth;
+}
 
 .active hr{
     @apply block

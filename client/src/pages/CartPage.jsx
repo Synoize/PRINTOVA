@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { AppContext } from "../context/AppContext";
-import { CircleX } from "lucide-react";
+import { ArrowLeft, CircleX, ShoppingCart } from "lucide-react";
 import MainLoader from "../components/MainLoader";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
   const { backendUrl, axios, token, cart, loading, setCart } = useContext(AppContext);
-
-  console.log(cart);
+  const navigate = useNavigate();
 
   const updateQuantity = async (productId, newQuantity) => {
     try {
@@ -39,22 +39,21 @@ const CartPage = () => {
   };
 
   const total = cart.reduce(
-    (sum, item) => sum + item.product?.offerPrice * item.quantity,
-    0
+    (sum, item) => sum + item.product?.offerPrice * item.quantity, 0
   );
 
   return (
     <div className="p-4 md:px-20">
-      <h2 className="text-2xl font-semibold mb-6 text-[#013e70]">Your Cart</h2>
+      <h2 className="text-xl md:text-2xl font-semibold mb-6 flex justify-start items-center gap-6"><span className="cursor-pointer text-[#013e70] p-1" onClick={() => { navigate(-1); scrollTo(0, 0); }}><ArrowLeft /></span>Your Cart</h2>
 
       <div className="flex flex-col justify-center items-center min-h-[70vh]">
         {loading ? (
           <MainLoader />
         ) : !cart.length ? (
-          <p>Your cart is empty</p>
+          <p className="text-gray-500 flex gap-3"><ShoppingCart /> Your cart is empty</p>
         ) : (
           <>
-            <div className="h-[58vh] overflow-y-scroll w-full">
+            <div className="h-[56vh] overflow-y-scroll w-full">
               <div className="space-y-4 h-full">
                 {cart.map((item) => (
                   <div
@@ -72,7 +71,7 @@ const CartPage = () => {
                           {item.product.name}
                         </h3>
                         <p className="text-sm text-gray-600">
-                          ₹{item.product.price.toFixed(2)} x {item.quantity}
+                          ₹{item.product.offerPrice.toFixed(2)} x {item.quantity}
                         </p>
                       </div>
                     </div>
