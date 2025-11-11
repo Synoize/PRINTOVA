@@ -12,6 +12,7 @@ const Navbar = () => {
     const { token, userData } = useContext(AppContext)
     const [showConfirm, setShowConfirm] = useState(false)
     const [showMenu, setShowMenu] = useState(false);
+    const [hovered, setHovered] = useState(false);
 
     return (
         <div className='flex flex-col border-b border-b-gray-400'>
@@ -63,19 +64,23 @@ const Navbar = () => {
 
                     {token && userData
                         ? (
-                            <div className='flex items-center gap-2 cursor-pointer group relative z-20'>
+                            <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className='flex items-center gap-2 cursor-pointer group relative z-20 '>
                                 <img className='w-8 rounded-full shadow-sm' src={userData.image} alt="" />
                                 <ChevronDown className='w-2.5' />
-                                <div className='absolute top-1 right-0 pt-14 text-base font-medium text-gray-600 x-20 hidden group-hover:block z-50'>
-                                    <div className='border-t-4 border-[#013e70] min-w-48 bg-slate-50 rounded flex flex-col gap-4 p-4'>
-                                        <p onClick={() => navigate('/my-profile')} className='hover:text-black cursor-pointer'>My Profile</p>
-                                        <p onClick={() => navigate('/cart')} className='hover:text-black cursor-pointer'>Cart</p>
-                                        <p onClick={() => navigate('/my-orders')} className='hover:text-black cursor-pointer'>My Orders</p>
-                                        <p onClick={() => { setShowConfirm(true) }} className='text-red-500 cursor-pointer'>Logout</p>
-                                    </div>
-                                </div>
                                 {
-                                    showConfirm && <ConfirmLogout item={{ setShowConfirm }} />
+                                    hovered && <>
+                                        <div className='absolute top-1 right-0 pt-14 text-base font-medium text-gray-600 x-20  z-50'>
+                                            <div className='border-t-4 border-[#013e70] min-w-48 bg-slate-50 rounded flex flex-col gap-4 p-4'>
+                                                <p onClick={() => navigate('/my-profile')} className='hover:text-black cursor-pointer'>My Profile</p>
+                                                <p onClick={() => navigate('/cart')} className='hover:text-black cursor-pointer'>Cart</p>
+                                                <p onClick={() => navigate('/my-orders')} className='hover:text-black cursor-pointer'>My Orders</p>
+                                                <p onClick={() => { setShowConfirm(true) }} className='text-red-500 cursor-pointer'>Logout</p>
+                                            </div>
+                                        </div>
+                                        {
+                                            showConfirm && <ConfirmLogout item={{ setShowConfirm }} />
+                                        }
+                                    </>
                                 }
                             </div>
                         ) : (
