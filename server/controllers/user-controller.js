@@ -1,3 +1,4 @@
+import ProductModel from '../models/product-model.js';
 import UserModel from '../models/user-model.js';
 import { v2 as cloudinary } from 'cloudinary';
 
@@ -60,3 +61,50 @@ export const updateUserProfile = async (req, res) => {
     }
 };
 
+// Add to Cart API: /api/user/add-cart
+export const addToCart = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const { productId, quantity } = req.body;
+
+        if (!productId) {
+            return res.status(400).json({ message: "Product ID is required" });
+        }
+
+        // Check product exists
+        const product = await ProductModel.findById(productId);
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        // Find user
+        const user = await UserModel.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Check if product already exists in cart
+        const existingItem = user.cart.find(
+            (item) => item?.productId === productId
+        );
+
+        if (existingItem?.productId === productId) {
+            return res.status(400).json({
+                message: "Already in cart",
+            });
+        } else {
+            user.cart.push({ productId, product, quantity });
+        }
+
+        await user.save();
+
+        return res.status(200).json({
+            message: "Added to cart",
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Server error",
+            error: error.message,
+        });
+    }
+};

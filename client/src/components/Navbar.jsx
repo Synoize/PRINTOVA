@@ -66,7 +66,7 @@ const Navbar = () => {
                             <div className='flex items-center gap-2 cursor-pointer group relative z-20'>
                                 <img className='w-8 rounded-full shadow-sm' src={userData.image} alt="" />
                                 <ChevronDown className='w-2.5' />
-                                <div className='absolute top-1 right-0 pt-14 text-base font-medium text-gray-600 x-20 hidden group-hover:block'>
+                                <div className='absolute top-1 right-0 pt-14 text-base font-medium text-gray-600 x-20 hidden group-hover:block z-50'>
                                     <div className='border-t-4 border-[#013e70] min-w-48 bg-slate-50 rounded flex flex-col gap-4 p-4'>
                                         <p onClick={() => navigate('/my-profile')} className='hover:text-black cursor-pointer'>My Profile</p>
                                         <p onClick={() => navigate('/cart')} className='hover:text-black cursor-pointer'>Cart</p>

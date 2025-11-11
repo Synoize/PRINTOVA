@@ -10,7 +10,8 @@ const AppContextProvider = (props) => {
 
     const localStorageToken = localStorage.getItem('token')
     const [token, setToken] = useState(localStorageToken ? localStorageToken : false)
-
+    const [loading, setLoading] = useState(true);
+    const [loadingCart, setLoadingCart] = useState(false);
     const [userData, setUserData] = useState(false);
     const [products, setProducts] = useState([])
     const [cart, setCart] = useState([]);
@@ -21,33 +22,57 @@ const AppContextProvider = (props) => {
     const getProductsData = async () => {
         try {
             const { data } = await axios.get(`${backendUrl}/api/product/list`)
-            
-            if (data?.success) {
-                setProducts(data.products)
-            } else {
-                toast.error(data.message)
-            }
 
+            if (data?.success) {
+                setProducts(data.products);
+            } else {
+                toast.error(data.message);
+                setLoading(false);
+            }
         } catch (error) {
             toast.error(error.message)
+        } finally {
+            setLoading(false);
         }
     }
 
     // Get User Profile Data
     const getUserProfileData = async () => {
+        setLoading(true);
         try {
             const { data } = await axios.get(`${backendUrl}/api/user/get-profile`, { headers: { Authorization: `Bearer ${token}` } })
 
             if (data.success) {
-                setUserData(data.userData)
+                setUserData(data.userData);
+                setCart(data.userData.cart);
             } else {
                 toast.error(data.message)
             }
 
         } catch (error) {
             toast.error(error.message)
+        } finally{
+            setLoading(false);
         }
     }
+
+    // Add To Cart
+    const addToCart = async (productId, quantity) => {
+        setLoadingCart(true);
+        try {
+            const { data } = await axios.patch(
+                `${backendUrl}/api/user/add-cart`,
+                { productId, quantity },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            setCart(data.cart);
+            toast.success("Product added to cart!");
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Failed to add to cart");
+        } finally {
+            setLoadingCart(false);
+        }
+    };
 
     useEffect(() => {
         if (token) {
@@ -55,15 +80,15 @@ const AppContextProvider = (props) => {
         } else {
             setUserData(false)
         }
-    }, [token])
+    }, [token, cart?.length])
 
     const value = {
         axios, currencySymbol, backendUrl,
         token, setToken,
-        userData, setUserData,
+        userData, setUserData, loading, setLoading,
         products, setProducts, getProductsData,
         keyword, setKeyword, getUserProfileData,
-        cart, setCart,
+        cart, setCart, addToCart, loadingCart, setLoadingCart
     }
 
     return (
