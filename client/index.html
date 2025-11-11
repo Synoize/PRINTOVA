@@ -1,14 +1,142 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PRINTOVA - PRINT CREATION</title>
-  </head>
-  <body style="background-color: #013e70;">
-    <div id="root"></div>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRINTOVA - PRINT CREATION</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script type="module" src="/src/main.jsx"></script>
+  <style>
+    :root {
+      --bg1: #020617;
+      --bg2: #0f172a;
+    }
+
+    * { box-sizing: border-box; }
+
+    @keyframes floatY {
+      0% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-25px) scale(1.03); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    @keyframes hueShift {
+      0% { filter: hue-rotate(0deg); }
+      50% { filter: hue-rotate(40deg); }
+      100% { filter: hue-rotate(0deg); }
+    }
+
+    .particles-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      display: block;
+    }
+
+    .title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-family: Poppins, sans-serif;
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      text-align: center;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+  </style>
+
+  <script>
+    document.body.style.background = 'linear-gradient(135deg, var(--bg1), var(--bg2))';
+    document.body.style.minHeight = '100vh';
+    document.body.style.position = 'relative';
+    document.body.style.fontSmooth = 'always';
+
+    // Canvas particles
+    const canvas = document.createElement('canvas');
+    canvas.className = 'particles-canvas';
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    let W = canvas.width = innerWidth;
+    let H = canvas.height = innerHeight;
+
+    const mouse = { x: null, y: null };
+    const particles = [];
+
+    function Particle() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.vx = (Math.random() - 0.5) * 0.6;
+      this.vy = (Math.random() - 0.5) * 0.6;
+      this.r = Math.random() * 2 + 0.5;
+    }
+
+    function initParticles() {
+      particles.length = 0;
+      const count = W < 600 ? 30 : W < 1000 ? 50 : 80;
+      for (let i = 0; i < count; i++) particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, W, H);
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.8)';
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const q = particles[j];
+          const dx = p.x - q.x;
+          const dy = p.y - q.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            ctx.strokeStyle = 'rgba(255,255,255,' + (1 - dist / 100) * 0.1 + ')';
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    initParticles();
+    animate();
+
+    window.addEventListener('resize', () => {
+      W = canvas.width = innerWidth;
+      H = canvas.height = innerHeight;
+      initParticles();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    // Title text
+    const title = document.createElement('div');
+    title.className = 'title';
+    title.style.zIndex = 0;
+    document.body.appendChild(title);
+  </script>
+</body>
+
 </html>

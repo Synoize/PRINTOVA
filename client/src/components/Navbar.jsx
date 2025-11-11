@@ -71,10 +71,10 @@ const Navbar = () => {
                                     hovered && <>
                                         <div className='absolute top-1 right-0 pt-14 text-base font-medium text-gray-600 x-20 z-50'>
                                             <div className='border-t-4 border-[#013e70] min-w-48 bg-slate-50 rounded flex flex-col gap-4 p-4'>
-                                                <p onClick={() => { navigate('/my-profile'); setHovered(false); scrollTo(0, 0) }} className='hover:text-black cursor-pointer'>My Profile</p>
-                                                <p onClick={() => { navigate('/cart'); setHovered(false); scrollTo(0, 0) }} className='hover:text-black cursor-pointer'>Cart</p>
-                                                <p onClick={() => { navigate('/my-orders'); setHovered(false); scrollTo(0, 0) }} className='hover:text-black cursor-pointer'>My Orders</p>
-                                                <p onClick={() => { setShowConfirm(true); setHovered(false); scrollTo(0, 0) }} className='text-red-500 cursor-pointer'>Logout</p>
+                                                <p onClick={() => { navigate('/my-profile'); setHovered(false); scrollTo(0,0); }} className='hover:text-black cursor-pointer'>My Profile</p>
+                                                <p onClick={() => { navigate('/cart'); setHovered(false); scrollTo(0,0); }} className='hover:text-black cursor-pointer'>Cart</p>
+                                                <p onClick={() => { navigate('/my-orders'); setHovered(false); scrollTo(0,0); }} className='hover:text-black cursor-pointer'>My Orders</p>
+                                                <p onClick={() => { setShowConfirm(true); setHovered(false); scrollTo(0,0); }} className='text-red-500 cursor-pointer'>Logout</p>
                                             </div>
                                         </div>
                                         {
@@ -91,7 +91,7 @@ const Navbar = () => {
                     <Menu onClick={() => setShowMenu(true)} className='w-6 md:hidden' />
 
                     {/* Mobile Menu */}
-                    <div className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 z-50 overflow-hidden bg-white transition-all`}>
+                    <div className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 z-50 overflow-hidden bg-white transition-all ease-in-out duration-300`}>
                         <div className='flex justify-between items-center text-sm bg-blue py-4 px-4 md:px-10 text-white'>
                             <p className='flex items-center gap-2'><Mail /> info@printcreation.com</p>
                             <p className='items-center gap-2 hidden md:flex'><TicketPercent /> Get more deals with offer</p>
@@ -101,7 +101,7 @@ const Navbar = () => {
                             <img className='w-34' src={assets.logo} alt="" />
                             <X className='w-7 cursor-pointer' onClick={() => setShowMenu(false)} />
                         </div>
-                        <ul className={`flex flex-col items-center gap-5 mt-5 px-5 text-sm font-medium`}>
+                        <ul className={`flex flex-col items-center gap-6 mt-5 px-5 text-sm font-medium`}>
                             <NavLink onClick={() => { setShowMenu(false); scrollTo(0, 0) }} to={'/'}>
                                 <li className='py-1'>HOME</li>
                                 <hr className='border-none outline-none h-0.5 bg-blue w-3/5 m-auto hidden rounded-full' />
