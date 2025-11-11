@@ -54,63 +54,65 @@ const CartPage = () => {
           <p>Your cart is empty</p>
         ) : (
           <>
-            <div className="space-y-4 min-h-[56vh] overflow-y-scroll w-full">
-              {cart.map((item) => (
-                <div
-                  key={item.productId}
-                  className="flex items-center justify-between p-4 md:px-12 border border-gray-300 rounded-lg"
-                >
-                  <div className="flex items-center space-x-4">
-                    <img
-                      src={item.product.image}
-                      alt={item.productId.name}
-                      className="w-20 h-20 object-cover rounded-md"
-                    />
-                    <div>
-                      <h3 className="font-medium line-clamp-1">
-                        {item.product.name}
-                      </h3>
-                      <p className="text-sm text-gray-600">
-                        ₹{item.product.price.toFixed(2)} x {item.quantity}
+            <div className="h-[58vh] overflow-y-scroll w-full">
+              <div className="space-y-4 h-full">
+                {cart.map((item) => (
+                  <div
+                    key={item.productId}
+                    className="flex items-center justify-between p-4 md:px-12 border border-gray-300 rounded-lg"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <img
+                        src={item.product.image}
+                        alt={item.productId.name}
+                        className="w-20 h-20 object-cover rounded-md"
+                      />
+                      <div>
+                        <h3 className="font-medium line-clamp-1">
+                          {item.product.name}
+                        </h3>
+                        <p className="text-sm text-gray-600">
+                          ₹{item.product.price.toFixed(2)} x {item.quantity}
+                        </p>
+                      </div>
+                    </div>
+                    <div className=" justify-center items-center hidden md:flex text-center">
+                      <p className=" text-sm px-6 p-2 text-[#013e70] border border-[#013e70] rounded-full hover:bg-[#013e70]/5 transition-all duration-300 ease-in-out">
+                        {item.product.category}
                       </p>
                     </div>
-                  </div>
-                  <div className=" justify-center items-center hidden md:flex text-center">
-                    <p className=" text-sm px-6 p-2 text-[#013e70] border border-[#013e70] rounded-full hover:bg-[#013e70]/5 transition-all duration-300 ease-in-out">
-                      {item.product.category}
-                    </p>
-                  </div>
 
-                  <div className="flex items-center md:space-x-28">
-                    <div className="flex items-center space-x-3">
+                    <div className="flex items-center md:space-x-28">
+                      <div className="flex items-center space-x-3">
+                        <button
+                          onClick={() =>
+                            updateQuantity(item.productId, item.quantity)
+                          }
+                          className="px-3 py-1 border rounded hover:bg-gray-100 cursor-pointer"
+                          disabled={item.quantity <= 1}
+                        >
+                          −
+                        </button>
+                        <span>{item.quantity}</span>
+                        <button
+                          onClick={() =>
+                            updateQuantity(item.productId, item.quantity + 1)
+                          }
+                          className="px-3 py-1 border rounded hover:bg-gray-100 cursor-pointer"
+                        >
+                          +
+                        </button>
+                      </div>
                       <button
-                        onClick={() =>
-                          updateQuantity(item.productId, item.quantity)
-                        }
-                        className="px-3 py-1 border rounded hover:bg-gray-100 cursor-pointer"
-                        disabled={item.quantity <= 1}
+                        onClick={() => removeFromCart(item.productId)}
+                        className="text-red-500 hover:underline md:block hidden cursor-pointer"
                       >
-                        −
-                      </button>
-                      <span>{item.quantity}</span>
-                      <button
-                        onClick={() =>
-                          updateQuantity(item.productId, item.quantity + 1)
-                        }
-                        className="px-3 py-1 border rounded hover:bg-gray-100 cursor-pointer"
-                      >
-                        +
+                        Remove
                       </button>
                     </div>
-                    <button
-                      onClick={() => removeFromCart(item.productId)}
-                      className="text-red-500 hover:underline md:block hidden cursor-pointer"
-                    >
-                      Remove
-                    </button>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             <div className="w-full flex justify-between items-center mt-8 p-4 border-t">
