@@ -8,7 +8,7 @@ import { Star } from 'lucide-react';
 
 const ProductPage = () => {
   const { productId } = useParams();
-  const { backendUrl, axios, products, getProductsData, addToCart, loadingCart } = useContext(AppContext);
+  const { navigate, backendUrl, axios, products, getProductsData, addToCart, loadingCart, fetchCartItems, deliveryCharge, taxRate, } = useContext(AppContext);
 
   const productInfo = useMemo(() => products.find(product => product._id === productId), [products, productId]);
   const [productData, setProductData] = useState({});
@@ -19,14 +19,19 @@ const ProductPage = () => {
   const increment = () => setQuantity(prev => prev + 1);
   const decrement = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
 
-  // product price
-  const delivery = 50;
-  const taxRate = 0.05;
-
-  const subtotal = productData.offerPrice * quantity;
+  // ---------- BILLING CALCULATION ----------
+  const subtotal = (productData.offerPrice || 0) * quantity;
   const tax = subtotal * taxRate;
   const otherCharges = 0;
-  const total = subtotal + delivery + tax + otherCharges;
+  const total = subtotal + deliveryCharge + tax + otherCharges;
+
+  // FINAL PRICE OBJECT
+  const price = {
+    subtotal: subtotal,
+    tax: tax,
+    delivery: deliveryCharge,
+    otherCharges: otherCharges,
+  };
 
   // uploaded design preview
   const [preview, setPreview] = useState(null);
@@ -106,7 +111,7 @@ const ProductPage = () => {
     <div className="px-6 md:px-16 lg:px-32 pt-14 space-y-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
         <div className="px-5 lg:px-16 xl:px-20">
-          <div className="rounded-lg overflow-hidden  bg-gray-500/10 mb-4 p-4 flex justify-center items-center">
+          <div className="rounded-lg overflow-hidden bg-gray-500/10 mb-4 p-4 flex justify-center items-center">
             <img
               src={productData.image}
               alt={productData.name || "Product"}
@@ -114,7 +119,6 @@ const ProductPage = () => {
             />
           </div>
         </div>
-
 
         <div className="flex flex-col">
           <h1 className="text-3xl text-gray-800/90 mb-4">
@@ -134,9 +138,9 @@ const ProductPage = () => {
           </div>
 
           <div className="flex items-center mt-5">
-            <span className="space-x-1 flex ">
+            <span className="space-x-1 flex">
               {
-                Array.from({ length: productData.rating === "" || productData.rating }, (_, index) => (
+                Array.from({ length: productData.rating || 0 }, (_, index) => (
                   <Star key={index} className='inline-block h-5 w-5 mb-0.5 text-yellow-400' />
                 ))
               }
@@ -150,35 +154,41 @@ const ProductPage = () => {
 
           <hr className="text-gray-300 my-6" />
 
+          {/* Delivery Section */}
           <div>
             <h2 className="text-lg font-medium mb-2">Delivery</h2>
             <form onSubmit={getLocationByPincode} className='grid grid-cols-2'>
-              <div className='flex w-40 '>
+              <div className='flex w-40'>
                 <input
                   type="number"
                   onChange={(e) => setPincode(e.target.value)}
                   value={pincode}
                   required
                   placeholder="Enter Pincode"
-                  className="w-full p-2 border border-gray-300 outline-none focus:border-[#013e70]" />
+                  className="w-full p-2 border border-gray-300 outline-none focus:border-[#013e70]"
+                />
                 {loadingLocation && (
-                  <div className="flex justify-center items-center gap-2  m-1">
+                  <div className="flex justify-center items-center gap-2 m-1">
                     <div className="h-4 w-4 border-2 border-[#013e70] border-t-transparent rounded-full animate-spin"></div>
                   </div>
                 )}
               </div>
-              <button type='submit' className='text-[#013e70] items-start md:justify-self-start ml-3 cursor-pointer'>Check</button>
+              <button type='submit' className='text-[#013e70] ml-3 cursor-pointer'>Check</button>
             </form>
+
             {location && (
-              <p className='text-sm mt-2 line-clamp-1'>{location.Pincode}, {location.Name}, {location.District}, {location.State}, {location.Country}</p>
+              <p className='text-sm mt-2'>
+                {location.Pincode}, {location.Name}, {location.District}, {location.State}, {location.Country}
+              </p>
             )}
           </div>
 
+          {/* Offers */}
           <div>
             <h2 className="text-lg font-medium mt-6 mb-2">Available Offers</h2>
             <div className="space-y-3 flex flex-col md:flex-row justify-between items-start md:items-center">
               <ul className="list-disc list-inside space-y-1 text-gray-600">
-                {productData.offers && productData.offers.length > 0 ? (
+                {productData.offers?.length > 0 ? (
                   productData.offers.map((offer, index) => (
                     <li key={index}>{offer}</li>
                   ))
@@ -186,31 +196,30 @@ const ProductPage = () => {
                   <li>No offers available</li>
                 )}
               </ul>
-              <input type="number" placeholder='Enter Coupon Code' className='p-2 outline-none border border-gray-300 focus:border-[#013e70]' />
+              <input type="text" placeholder='Enter Coupon Code' className='p-2 border border-gray-300 outline-none focus:border-[#013e70]' />
             </div>
           </div>
 
-
-          {
-            productData.category === "Business card" ? (
-              <div>
-                <h2 className="text-lg font-medium mt-6 mb-2">Select Orientation</h2>
-                <div className='flex space-x-3'>
-                  <button className='border px-4 p-2 rounded border-gray-300 focus:text-[#013e70] focus:border-[#013e70] cursor-pointer'>Portraite</button>
-                  <button className='border px-4 p-2 rounded border-gray-300 focus:text-[#013e70] focus:border-[#013e70] cursor-pointer'>Landscape</button>
-                </div>
+          {/* Type Selection */}
+          {productData.category === "Business card" ? (
+            <div>
+              <h2 className="text-lg font-medium mt-6 mb-2">Select Orientation</h2>
+              <div className='flex space-x-3'>
+                <button className='border px-4 p-2 rounded border-gray-300 focus:text-[#013e70] focus:border-[#013e70]'>Portrait</button>
+                <button className='border px-4 p-2 rounded border-gray-300 focus:text-[#013e70] focus:border-[#013e70]'>Landscape</button>
               </div>
-            ) : (
-              <div>
-                <h2 className="text-lg font-medium mt-6 mb-2">Select Types</h2>
-                <div className='flex space-x-3'>
-                  <button className='border px-4 p-2 rounded border-gray-300 focus:text-[#013e70] focus:border-[#013e70] cursor-pointer'>Standard</button>
-                  <button className='border px-4 p-2 rounded border-gray-300 focus:text-[#013e70] focus:border-[#013e70] cursor-pointer'>Polo</button>
-                </div>
+            </div>
+          ) : (
+            <div>
+              <h2 className="text-lg font-medium mt-6 mb-2">Select Types</h2>
+              <div className='flex space-x-3'>
+                <button className='border px-4 p-2 rounded border-gray-300 focus:text-[#013e70] focus:border-[#013e70] cursor-pointer'>Standard</button>
+                <button className='border px-4 p-2 rounded border-gray-300 focus:text-[#013e70] focus:border-[#013e70] cursor-pointer'>Polo</button>
               </div>
-            )
-          }
+            </div>
+          )}
 
+          {/* Select Quality */}
           <div>
             <h2 className="text-lg font-medium mt-6 mb-2">Select Quality</h2>
             <div className='flex space-x-3'>
@@ -219,50 +228,34 @@ const ProductPage = () => {
             </div>
           </div>
 
+          {/* Quantity */}
           <div>
             <h2 className="text-lg font-medium mt-6 mb-2">Quantity</h2>
             <div className="flex items-center border border-gray-300 w-fit rounded overflow-hidden">
-              <button
-                onClick={decrement}
-                className="px-4 py-2 text-lg bg-[#013e70]/5 hover:bg-[#013e70]/10 cursor-pointer"
-              >
-                −
-              </button>
-              <input
-                type="number"
-                value={quantity}
-                readOnly
-                className="w-12 text-center outline-none"
-              />
-              <button
-                onClick={increment}
-                className="px-4 py-2 text-lg bg-[#013e70]/5 hover:bg-[#013e70]/10 cursor-pointer"
-              >
-                +
-              </button>
+              <button onClick={decrement} className="px-4 py-2 text-lg bg-[#013e70]/5 hover:bg-[#013e70]/10 cursor-pointer">−</button>
+              <input type="number" value={quantity} readOnly className="w-12 text-center outline-none" />
+              <button onClick={increment} className="px-4 py-2 text-lg bg-[#013e70]/5 hover:bg-[#013e70]/10 cursor-pointer">+</button>
             </div>
           </div>
 
+          {/* Upload Design */}
           <div>
             <h2 className="text-lg font-medium mt-6 mb-2">Upload Design</h2>
             <input
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="w-52 p-2 border border-gray-300 outline-none focus:border-[#013e70] cursor-pointer rounded"
+              className="w-52 p-2 border border-gray-300 rounded cursor-pointer"
             />
 
             {preview && (
-              <img
-                src={preview}
-                alt="Uploaded design"
-                className="w-40 h-40 mt-4 object-cover rounded"
-              />
+              <img src={preview} alt="Uploaded design" className="w-40 h-40 mt-4 object-cover rounded" />
             )}
           </div>
 
           <hr className="text-gray-300 my-6" />
 
+          {/* Detailed Bill */}
           <div>
             <h2 className="text-lg font-medium mb-2">Detailed Bill</h2>
             <div className="border border-gray-300 rounded-lg p-4">
@@ -270,38 +263,49 @@ const ProductPage = () => {
                 <p className="flex items-center gap-1">Subtotal <span className='text-red-500 text-sm'>({quantity})</span> </p>
                 <p>₹{subtotal.toFixed(2)}</p>
               </div>
+
               <div className="flex justify-between mb-2">
                 <span>Delivery Charges</span>
-                <span>₹{delivery}</span>
+                <span>₹{deliveryCharge.toFixed(2)}</span>
               </div>
+
               <div className="flex justify-between mb-2">
                 <span>Tax (5%)</span>
                 <span>₹{tax.toFixed(2)}</span>
               </div>
+
               <div className="flex justify-between mb-2">
                 <span>Other Charges</span>
                 <span>₹{otherCharges.toFixed(2)}</span>
               </div>
+
               <hr className="my-2" />
+
               <div className="flex justify-between font-medium text-lg">
                 <span>Total</span>
                 <span>₹{total.toFixed(2)}</span>
               </div>
             </div>
           </div>
-          <hr className="text-gray-300 mt-2 " />
 
+          <hr className="text-gray-300 mt-2" />
+
+          {/* Buttons */}
           <div className="flex items-center mt-10 gap-4">
-            <button onClick={() => addToCart(productId, quantity)} className="w-full py-3.5 bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition cursor-pointer">
-              {
-                loadingCart ? (
-                  <div className="flex justify-center items-center gap-2 m-1">
-                    <div className="h-4 w-4 border-2 border-[#013e70] border-t-transparent rounded-full animate-spin"></div>
-                  </div>
-                ) : "Add to Cart"
-              }
+            <button
+              onClick={() => addToCart(productId, quantity, price)}
+              className="w-full py-3.5 bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition cursor-pointer"
+            >
+              {loadingCart ? (
+                <div className="flex justify-center items-center gap-2 m-1">
+                  <div className="h-4 w-4 border-2 border-[#013e70] border-t-transparent rounded-full animate-spin"></div>
+                </div>
+              ) : "Add to Cart"}
             </button>
-            <button className="w-full py-3.5 bg-[#013e70]/90 text-white hover:bg-[#013e70] transition cursor-pointer">
+
+            <button
+             onClick={() => {addToCart(productId, quantity, price); navigate('/cart'); fetchCartItems(); scrollTo(0,0);}}
+             className="w-full py-3.5 bg-[#013e70]/90 text-white hover:bg-[#013e70] transition cursor-pointer">
               Buy Now
             </button>
           </div>
